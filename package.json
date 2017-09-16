@@ -32,7 +32,7 @@
     "publicPath": "/",
     "output": "dist",
     "src": "src",
-    "port": 8080,
+    "port": 8088,
     "vendors": [
       "babel-polyfill",
       "react",
