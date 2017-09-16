@@ -1273,6 +1273,12 @@ clean-css@~3.4.2:
     commander "2.8.x"
     source-map "0.4.x"
 
+clean-webpack-plugin@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/clean-webpack-plugin/-/clean-webpack-plugin-0.1.16.tgz#422a8e150bf3d5abfd3d14bfacb070e80fb2e23f"
+  dependencies:
+    rimraf "~2.5.1"
+
 cli-cursor@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-2.1.0.tgz#b35dac376479facc3e94747d41d0d0f5238ffcb5"
@@ -5338,6 +5344,21 @@ react-dom@15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
+react-modal-syaku@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-modal-syaku/-/react-modal-syaku-1.0.2.tgz#5e16f26120bcbbc0d0ec302cad980502c3849fef"
+  dependencies:
+    babel-polyfill "^6.23.0"
+    bootstrap "^3.3.7"
+    flow-bin "0.54.1"
+    font-awesome "^4.7.0"
+    immutable "^3.8.1"
+    prop-types "^15.5.10"
+    react "15.6.1"
+    react-dom "15.6.1"
+    shortid "^2.2.8"
+    styled-components "^2.1.2"
+
 react@15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
@@ -5624,6 +5645,12 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.6.1:
 rimraf@~2.2.8:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
+
+rimraf@~2.5.1:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.5.4.tgz#96800093cbf1a0c86bd95b4625467535c29dfa04"
+  dependencies:
+    glob "^7.0.5"
 
 ripemd160@^2.0.0, ripemd160@^2.0.1:
   version "2.0.1"

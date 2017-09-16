@@ -4,14 +4,15 @@
  * @since: 2017. 8. 22.
  */
 
-import ReactDOM from 'react-dom';
 import React from 'react';
 import shortid from 'shortid';
+// import Modal from 'react-modal-syaku';
+// import 'react-modal-syaku/dist/react-modal-syaku.css';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 
-import Modal from './index';
+import Modal from '../Modal';
 
 class ModalContainer extends React.Component {
   constructor(props) {
@@ -127,7 +128,4 @@ class ModalContainer extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <ModalContainer />,
-  document.getElementById('app'),
-);
+export default ModalContainer;

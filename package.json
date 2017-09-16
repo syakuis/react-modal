@@ -1,6 +1,6 @@
 {
   "name": "react-modal-syaku",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "react modal",
   "author": "Syaku (최석균) <http://syaku.tistory.com>",
   "license": "MIT",
@@ -29,23 +29,20 @@
     }
   },
   "config": {
+    "filename": "react-modal",
     "publicPath": "/",
     "output": "dist",
     "src": "src",
-    "port": 8088,
-    "vendors": [
-      "babel-polyfill",
-      "react",
-      "react-dom",
-      "prop-types",
-      "flow-bin"
-    ]
+    "entry": "./src/index.js",
+    "port": 8088
   },
   "scripts": {
     "test": "jest",
     "build:dev": "webpack --devtool source-map --colors --progress -d",
     "build:prod": "webpack --colors --progress -p",
+    "build:demo": "webpack --config webpack.config.demo.js --devtool source-map --colors --progress -d",
     "serv:demo": "webpack-dev-server --config webpack.config.demo.js --devtool source-map --colors --progress -d",
+    "serv:demo2": "webpack-dev-server --config webpack.config.demo2.js --devtool source-map --colors --progress -d",
     "serv:dev": "webpack-dev-server --devtool source-map --colors --progress -d",
     "serv:prod": "webpack-dev-server --colors --progress -p --compress",
     "state:dev": "webpack --config webpack.state.config.js --colors --progress -d --profile --json > stats-dev.json",
@@ -64,6 +61,7 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-3": "^6.22.0",
     "bundle-loader": "^0.5.5",
+    "clean-webpack-plugin": "^0.1.16",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.4",
     "eslint": "^4.6.1",
@@ -105,6 +103,7 @@
     "prop-types": "^15.5.10",
     "react": "15.6.1",
     "react-dom": "15.6.1",
+    "react-modal-syaku": "^1.0.2",
     "shortid": "^2.2.8",
     "styled-components": "^2.1.2"
   }

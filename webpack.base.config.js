@@ -6,36 +6,41 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const pkg = require('./package.json');
-const filename = 'react-modal';
+let config = null;
 
 module.exports = (env) => {
+  config = config === null ? Object.assign({}, pkg.config, env) : config;
   const {
-    port, publicPath, vendors, output, src,
-  } = Object.assign({}, pkg.config, env);
+    port, publicPath, output, src, entry, filename,
+  } = config;
 
   return {
 
-    entry: `./${src}/index.js`,
+    entry,
 
     output: {
       path: path.join(__dirname, output),
       publicPath,
       filename: `${filename}.js`,
+      libraryTarget: 'umd',
+      library: 'Modal',
     },
 
     plugins: [
+      new CleanWebpackPlugin([output]),
       new ExtractTextPlugin({
         filename: `${filename}.css`,
       }),
-      new webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html',
         template: `${src}/index.html`,
       }),
+      new webpack.HotModuleReplacementPlugin(),
     ],
     module: {
       rules: [

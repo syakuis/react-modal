@@ -12,10 +12,10 @@
     "import/resolver": "webpack",
     "import/parser": "babel-eslint"
   },
-  "globals": {
-    "API_SERVER_PATH": true,
-    "ELEMENT_ID": true
-  },
+  // "globals": {
+  //   "API_SERVER_PATH": true,
+  //   "ELEMENT_ID": true
+  // },
   "rules": {
     "react/jsx-filename-extension": [
       1,
