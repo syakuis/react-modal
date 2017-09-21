@@ -1,6 +1,6 @@
 {
   "name": "react-modal-syaku",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "react modal",
   "author": "Syaku (최석균) <http://syaku.tistory.com>",
   "license": "MIT",
@@ -101,7 +101,8 @@
     "webpack": "2.6.1",
     "webpack-bundle-analyzer": "^2.3.0",
     "webpack-dev-server": "^2.4.2",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "react-modal-syaku": "^1.0.6"
   },
   "dependencies": {
     "flow-bin": "0.54.1",
@@ -111,10 +112,7 @@
     "styled-components": "^2.1.2"
   },
   "peerDependencies": {
-    "bootstrap": ">=3.0.0",
-    "font-awesome": ">=4.0.0",
     "react": ">=15.0.0 <16.0.0",
-    "react-dom": ">=15.0.0 <16.0.0",
-    "react-modal-syaku": "^1.0.6"
+    "react-dom": ">=15.0.0 <16.0.0"
   }
 }

@@ -3,7 +3,7 @@
  * @site: http://syaku.tistory.com
  * @since: 2017. 8. 22.
  */
-
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 import React from 'react';
 import shortid from 'shortid';
 import Modal from 'react-modal-syaku';
