@@ -56,12 +56,14 @@ const Container = styled.div`
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  style: PropTypes.shape(),
   width: PropTypes.string,
   height: PropTypes.string,
   left: PropTypes.string,
   top: PropTypes.string,
   center: PropTypes.bool,
-  isOpen: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool,
   isCloseButton: PropTypes.bool,
   onRequestClose: PropTypes.func,
 
@@ -70,12 +72,15 @@ const propTypes = {
 };
 
 const defaultProps = {
+  className: '',
+  style: undefined,
   width: '50%',
   height: 'auto',
   left: '0',
   top: '0',
   center: true,
   isCloseButton: true,
+  isOpen: false,
   onRequestClose: null,
 };
 
@@ -101,10 +106,12 @@ class Modal extends Component {
 
   render() {
     if (!this.props.isOpen) return null;
-    let { center } = this.props;
-    center = (this.props.left !== '0' || this.props.top !== '0') ? false : center;
-    const Content = (
+    const center = (this.props.left !== '0' || this.props.top !== '0') ? false : this.props.center;
+    const style = this.props.style ? this.props.style : '';
+    return (
       <Container
+        style={{ ...style }}
+        className={this.props.className}
         onClick={this.props.onModalSelect}
         data-modal-content=""
         width={this.props.width}
@@ -118,17 +125,6 @@ class Modal extends Component {
         }
         {this.props.children}
       </Container>
-    );
-
-    return (
-      <div>
-        {
-          // draggable 추후 적용
-          // this.props.draggable ?
-          //   <Draggable>{Content}</Draggable> : Content
-          Content
-        }
-      </div>
     );
   }
 }

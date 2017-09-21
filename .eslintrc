@@ -6,17 +6,15 @@
   "parser": "babel-eslint",
   "extends": "airbnb",
   "plugins": [
-    "jest"
+    "jest",
+    "react"
   ],
   "settings": {
     "import/resolver": "webpack",
     "import/parser": "babel-eslint"
   },
-  // "globals": {
-  //   "API_SERVER_PATH": true,
-  //   "ELEMENT_ID": true
-  // },
   "rules": {
+    "import/extensions": [ "error", "never", { "packages": "always" } ],
     "react/jsx-filename-extension": [
       1,
       { "extensions": [".js", ".jsx"] }

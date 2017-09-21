@@ -6,13 +6,11 @@
 
 import React from 'react';
 import shortid from 'shortid';
-// import Modal from 'react-modal-syaku';
-// import 'react-modal-syaku/dist/react-modal-syaku.css';
+import Modal from 'react-modal-syaku';
+import 'react-modal-syaku/dist/react-modal.css';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
-
-import Modal from '../Modal';
 
 class ModalContainer extends React.Component {
   constructor(props) {
@@ -71,8 +69,6 @@ class ModalContainer extends React.Component {
           모달 열기
         </button>
         <Modal
-          style={{ color: '#BE3D3D' }}
-          className="good"
           isOpen={this.state.isOpen}
           onRequestClose={this.onModalOpen}
           group={this.group}
