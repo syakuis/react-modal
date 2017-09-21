@@ -13,10 +13,23 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pkg = require('./package.json');
 let config = null;
 
+const reactExternal = {
+  root: 'React',
+  commonjs2: 'react',
+  commonjs: 'react',
+  amd: 'react'
+};
+const reactDOMExternal = {
+  root: 'ReactDOM',
+  commonjs2: 'react-dom',
+  commonjs: 'react-dom',
+  amd: 'react-dom'
+};
+
 module.exports = (env) => {
   config = config === null ? Object.assign({}, pkg.config, env) : config;
   const {
-    port, publicPath, output, src, entry, filename,
+    port, publicPath, output, src, entry, filename
   } = config;
 
   return {
@@ -31,11 +44,20 @@ module.exports = (env) => {
       library: 'Modal',
     },
 
+    externals: {
+      'react': reactExternal,
+      'react-dom': reactDOMExternal
+    },
+
     plugins: [
       new CleanWebpackPlugin([output]),
       new ExtractTextPlugin({
         filename: `${filename}.css`,
       }),
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   name: 'vendors',
+      //   filename: "vendors.js",
+      // }),
       new HtmlWebpackPlugin({
         filename: 'index.html',
         template: `${src}/index.html`,

@@ -1,6 +1,6 @@
 {
   "name": "react-modal-syaku",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "react modal",
   "author": "Syaku (최석균) <http://syaku.tistory.com>",
   "license": "MIT",
@@ -39,7 +39,7 @@
   "scripts": {
     "test": "jest",
     "build:dev": "webpack --devtool source-map --colors --progress -d",
-    "build:prod": "webpack --colors --progress -p",
+    "build:prod": "webpack --colors --progress",
     "build:demo": "webpack --config webpack.config.demo.js --devtool source-map --colors --progress -d",
     "serv:demo": "webpack-dev-server --config webpack.config.demo.js --devtool source-map --colors --progress -d",
     "serv:demo2": "webpack-dev-server --config webpack.config.demo2.js --devtool source-map --colors --progress -d",
