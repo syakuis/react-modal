@@ -8,5 +8,6 @@ RUNNING_PID
 
 *.log
 *.bak
+*.tgz
 
 node_modules/
