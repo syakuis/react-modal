@@ -5129,14 +5129,6 @@ react-dom@15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-modal-syaku@./react-modal-syaku-v1.0.8.tgz:
-  version "1.0.8"
-  resolved "./react-modal-syaku-v1.0.8.tgz#eb72e2592399da9fb613afe1c3cbb9c45b063294"
-  dependencies:
-    prop-types "^15.5.10"
-    shortid "^2.2.8"
-    styled-components "^2.1.2"
-
 react@15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
