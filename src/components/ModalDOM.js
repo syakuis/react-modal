@@ -4,7 +4,7 @@
  * @since: 2017. 9. 6.
  */
 
-import '_resources/style.css';
+import s from '_resources/style.module.css';
 
 class ModalDOM {
   constructor(groupId, id, isOverlay) {
@@ -29,6 +29,7 @@ class ModalDOM {
       if (isOverlay) {
         this.overlayNode = this.document.createElement('div');
         this.overlayNode.setAttribute('data-modal-overlay', '');
+        this.overlayNode.setAttribute('class', s.overlay);
         this.rootNode.appendChild(this.overlayNode);
       }
 
@@ -70,16 +71,17 @@ class ModalDOM {
 
   update() {
     const modalNodes = this.rootNode.querySelectorAll('[data-modal-content]');
+    const overlayNode = this.overlayNode === null ? this.rootNode.querySelector('[data-modal-overlay]') : this.overlayNode;
 
     // overlay 제거
-    if (this.overlayNode != null) {
+    if (overlayNode != null && overlayNode.style) {
       if (modalNodes.length === 0) {
-        this.overlayNode.style.display = 'none';
+        overlayNode.style.display = 'none';
       } else {
-        this.overlayNode.style.display = 'block';
+        overlayNode.style.display = 'block';
       }
       // this.overlayNode.style.zIndex = this.zIndex + this.getOrderIndex(this.group);
-      this.overlayNode.style.zIndex = this.zIndex;
+      overlayNode.style.zIndex = this.zIndex;
     }
     // render 되면서 상실되고 새로만들어진 id 가 생긴다. id가 없는 경우 처리하지 않는 다.
     let modalContentNode = this.document.getElementById(this.id);

@@ -36,7 +36,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        // exclude: /src/,
+        exclude: /\.module\.css$/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
@@ -44,6 +44,25 @@ module.exports = {
               loader: 'css-loader',
               options: {
                 importLoaders: 1,
+              },
+            },
+          ],
+        }),
+      },
+      {
+        test: /\.module\.css$/,
+        include: path.join(__dirname, src),
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: process.env.NODE_ENV === 'production',
+                sourceMap: process.env.NODE_ENV === 'production',
+                camelCase: true,
+                modules: true,
+                localIdentName: '[path][name]__[local]--[hash:base64:5]'
               },
             },
           ],

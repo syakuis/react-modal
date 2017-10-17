@@ -6,7 +6,7 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 import ReactDOM from 'react-dom';
 import React from 'react';
-import ModalContainer from './ModalContainer';
+import ModalContainer from './ModalContainer2';
 
 ReactDOM.render(
   <ModalContainer />,

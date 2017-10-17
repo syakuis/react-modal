@@ -11,7 +11,6 @@ const base = require('./webpack.base.config');
 const pkg = require('./package.json');
 const { port, publicPath, dist, src, entry, filename, externals } = pkg.config;
 
-console.log(src, dist);
 module.exports = merge(base, {
   devtool: 'source-map',
   entry: './src/demo/index2.js',

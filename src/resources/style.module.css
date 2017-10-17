@@ -1,4 +1,4 @@
-.src-resources-style-module__overlay--2Pmwh {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,7 +8,7 @@
   opacity: 0.2;
 }
 
-.src-resources-style-module__close--Fdscr {
+.close {
   position: absolute;
   top: -12.5px;
   right: -12.5px;
@@ -17,10 +17,10 @@
   height: 30px;
   text-indent: -9999px;
   cursor: pointer;
-  background: url(images/close-f2aace763cfcc4d6f3427a8a0842e55c.png) no-repeat 0 0;
+  background: url(./close.png) no-repeat 0 0;
 }
 
-.src-resources-style-module__container--2vhyS {
+.container {
   padding: 10px;
   background: #fff;
   -webkit-border-radius: 5px;
@@ -40,7 +40,7 @@
   height: 100px;
 }
 
-.src-resources-style-module__container--2vhyS.src-resources-style-module__center--349I1 {
+.container.center {
   transform: translateX(-50%) translateY(-50%);
   left: 50%;
   top: 50%;
