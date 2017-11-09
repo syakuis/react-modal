@@ -25,5 +25,7 @@ module.exports = merge(base, {
   devServer: {
     port,
     contentBase: dist,
+    disableHostCheck: true,
+    host: '0.0.0.0',
   },
 });

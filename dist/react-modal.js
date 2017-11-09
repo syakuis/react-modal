@@ -7,7 +7,7 @@
 		exports["Modal"] = factory(require("react"), require("react-dom"));
 	else
 		root["Modal"] = factory(root["React"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_21__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_11__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -70,126 +70,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var randomFromSeed = __webpack_require__(19);
-
-var ORIGINAL = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
-var alphabet;
-var previousSeed;
-
-var shuffled;
-
-function reset() {
-    shuffled = false;
-}
-
-function setCharacters(_alphabet_) {
-    if (!_alphabet_) {
-        if (alphabet !== ORIGINAL) {
-            alphabet = ORIGINAL;
-            reset();
-        }
-        return;
-    }
-
-    if (_alphabet_ === alphabet) {
-        return;
-    }
-
-    if (_alphabet_.length !== ORIGINAL.length) {
-        throw new Error('Custom alphabet for shortid must be ' + ORIGINAL.length + ' unique characters. You submitted ' + _alphabet_.length + ' characters: ' + _alphabet_);
-    }
-
-    var unique = _alphabet_.split('').filter(function(item, ind, arr){
-       return ind !== arr.lastIndexOf(item);
-    });
-
-    if (unique.length) {
-        throw new Error('Custom alphabet for shortid must be ' + ORIGINAL.length + ' unique characters. These characters were not unique: ' + unique.join(', '));
-    }
-
-    alphabet = _alphabet_;
-    reset();
-}
-
-function characters(_alphabet_) {
-    setCharacters(_alphabet_);
-    return alphabet;
-}
-
-function setSeed(seed) {
-    randomFromSeed.seed(seed);
-    if (previousSeed !== seed) {
-        reset();
-        previousSeed = seed;
-    }
-}
-
-function shuffle() {
-    if (!alphabet) {
-        setCharacters(ORIGINAL);
-    }
-
-    var sourceArray = alphabet.split('');
-    var targetArray = [];
-    var r = randomFromSeed.nextValue();
-    var characterIndex;
-
-    while (sourceArray.length > 0) {
-        r = randomFromSeed.nextValue();
-        characterIndex = Math.floor(r * sourceArray.length);
-        targetArray.push(sourceArray.splice(characterIndex, 1)[0]);
-    }
-    return targetArray.join('');
-}
-
-function getShuffled() {
-    if (shuffled) {
-        return shuffled;
-    }
-    shuffled = shuffle();
-    return shuffled;
-}
-
-/**
- * lookup shuffled letter
- * @param index
- * @returns {string}
- */
-function lookup(index) {
-    var alphabetShuffled = getShuffled();
-    return alphabetShuffled[index];
-}
-
-module.exports = {
-    characters: characters,
-    seed: setSeed,
-    lookup: lookup,
-    shuffled: getShuffled
-};
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-module.exports = {"overlay":"src-resources-style-module__overlay--2Pmwh","close":"src-resources-style-module__close--Fdscr","container":"src-resources-style-module__container--2vhyS","center":"src-resources-style-module__center--349I1"};
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -220,44 +108,25 @@ if (false) {
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(9)();
+  module.exports = __webpack_require__(7)();
 }
 
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+module.exports = {"overlay":"src-resources-style-module__overlay--2Pmwh","close":"src-resources-style-module__close--Fdscr","container":"src-resources-style-module__container--2vhyS","center":"src-resources-style-module__center--349I1"};
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var randomByte = __webpack_require__(18);
-
-function encode(lookup, number) {
-    var loopCounter = 0;
-    var done;
-
-    var str = '';
-
-    while (!done) {
-        str = str + lookup( ( (number >> (4 * loopCounter)) & 0x0f ) | randomByte() );
-        done = number < (Math.pow(16, loopCounter + 1 ) );
-        loopCounter++;
-    }
-    return str;
-}
-
-module.exports = encode;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -271,29 +140,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _reactDom = __webpack_require__(21);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _react = __webpack_require__(4);
+var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(2);
+var _reactDom = __webpack_require__(11);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _propTypes = __webpack_require__(0);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _shortid = __webpack_require__(13);
-
-var _shortid2 = _interopRequireDefault(_shortid);
-
-var _ModalDOM = __webpack_require__(7);
-
-var _ModalDOM2 = _interopRequireDefault(_ModalDOM);
-
-var _Modal = __webpack_require__(6);
+var _Modal = __webpack_require__(4);
 
 var _Modal2 = _interopRequireDefault(_Modal);
+
+var _Overlay = __webpack_require__(5);
+
+var _Overlay2 = _interopRequireDefault(_Overlay);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -301,53 +166,53 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Modal Component
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author: Seok Kyun. Choi. 최석균 (Syaku)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @site: http://syaku.tistory.com
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @since: 2017. 8. 31.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var propTypes = {
-  group: _propTypes2.default.string,
-  isOverlay: _propTypes2.default.bool
+  children: _propTypes2.default.node.isRequired,
 
-  // afterOpen: PropTypes.func,
-  // beforeOpen: PropTypes.func,
-  // doneClose: PropTypes.func,
+  isOpen: _propTypes2.default.bool,
+  onRequestClose: _propTypes2.default.func,
+  isCloseButton: _propTypes2.default.bool,
+  isOverlay: _propTypes2.default.bool,
+
+  zIndex: _propTypes2.default.number,
+
+  beforeOpen: _propTypes2.default.func,
+  afterOpen: _propTypes2.default.func,
+  doneClose: _propTypes2.default.func
 };
 
 var defaultProps = {
-  group: undefined,
-  isOverlay: true
+  isOpen: false,
+  onRequestClose: null,
+  isCloseButton: true,
+  isOverlay: true,
 
-  // afterOpen: null,
-  // beforeOpen: null,
-  // doneClose: null,
+  zIndex: null,
+
+  beforeOpen: null,
+  afterOpen: null,
+  doneClose: null
 };
 
-var Modal = function (_Component) {
-  _inherits(Modal, _Component);
+var modal = document.getElementById('react-modal');
+
+var Modal = function (_React$Component) {
+  _inherits(Modal, _React$Component);
 
   function Modal(props) {
     _classCallCheck(this, Modal);
 
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
 
-    _this.id = _shortid2.default.generate();
-    _this.group = props.group ? props.group : _shortid2.default.generate();
-    _this.modalDOM = new _ModalDOM2.default(_this.group, _this.id, props.isOverlay);
+    _this.ele = document.createElement('div');
+    _this.onRequestClose = _this.onRequestClose.bind(_this);
+    _this.onEscClose = _this.onEscClose.bind(_this);
 
-    _this.rootNode = null;
-    _this.modalNode = null;
-
-    _this.onModalUpdate = _this.onModalUpdate.bind(_this);
-    _this.onModalSelect = _this.onModalSelect.bind(_this);
-
-    _this.beforeOpen = false;
-    _this.afterOpen = false;
-    _this.doneClose = true;
+    _this.beforeOpen = props.isOpen;
+    _this.afterOpen = props.isOpen;
+    _this.doneClose = !props.isOpen;
     return _this;
   }
 
@@ -355,13 +220,14 @@ var Modal = function (_Component) {
     key: 'componentWillMount',
     value: function componentWillMount() {
       this.onEventBeforeOpen(this.props);
+      this.onEventAfterOpen(this.props);
+      this.onEventDoneClose(this.props);
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.rootNode = this.modalDOM.getRootNode();
-      this.modalNode = this.modalDOM.getModalNode();
-      this.renderModal(this.props);
+      modal.appendChild(this.ele);
+      this.ele.addEventListener('keydown', this.onEscClose);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -372,33 +238,33 @@ var Modal = function (_Component) {
       } else {
         this.doneClose = false;
       }
-      this.onEventBeforeOpen(newProps);
-      this.renderModal(newProps);
-      this.onEventDoneClose(newProps);
+    }
+  }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate(nextProps) {
+      this.onEventBeforeOpen(nextProps);
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
-      this.renderModal(this.props);
+      this.onEventAfterOpen(this.props);
+      this.onEventDoneClose(this.props);
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      _reactDom2.default.unmountComponentAtNode(this.rootNode);
-      this.modalDOM.destroy();
+      this.ele.removeEventListener('keydown', this.onEscClose);
+      modal.removeChild(this.ele);
     }
   }, {
-    key: 'onModalUpdate',
-    value: function onModalUpdate(isDid) {
-      this.modalDOM.update();
-      if (isDid) {
-        this.onEventAfterOpen(this.props);
-      }
+    key: 'onRequestClose',
+    value: function onRequestClose() {
+      if (typeof this.props.onRequestClose === 'function') this.props.onRequestClose();
     }
   }, {
-    key: 'onModalSelect',
-    value: function onModalSelect() {
-      this.modalDOM.zIndexUpdate(this.group, this.id);
+    key: 'onEscClose',
+    value: function onEscClose(e) {
+      if (e.keyCode === 27) this.onRequestClose();
     }
   }, {
     key: 'onEventBeforeOpen',
@@ -422,23 +288,24 @@ var Modal = function (_Component) {
       this.doneClose = true;
     }
   }, {
-    key: 'renderModal',
-    value: function renderModal(props) {
-      _reactDom2.default.unstable_renderSubtreeIntoContainer(this, _react2.default.createElement(_Modal2.default, _extends({}, props, {
-        id: this.id,
-        onModalUpdate: this.onModalUpdate,
-        onModalSelect: this.onModalSelect
-      })), this.modalNode);
-    }
-  }, {
     key: 'render',
     value: function render() {
-      return null;
+      return _reactDom2.default.createPortal([this.props.isOverlay && this.props.isOpen ? _react2.default.createElement(_Overlay2.default, {
+        key: 'reactModalOverlay',
+        zIndex: this.props.zIndex
+      }) : null, this.props.isOpen ? _react2.default.createElement(
+        _Modal2.default,
+        _extends({}, this.props, {
+          onRequestClose: this.onRequestClose,
+          key: 'reactModal'
+        }),
+        this.props.children
+      ) : null], this.ele);
     }
   }]);
 
   return Modal;
-}(_react.Component);
+}(_react2.default.Component);
 
 Modal.propTypes = propTypes;
 Modal.defaultProps = defaultProps;
@@ -446,7 +313,7 @@ Modal.defaultProps = defaultProps;
 exports.default = Modal;
 
 /***/ }),
-/* 6 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -460,15 +327,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(4);
+var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(2);
+var _propTypes = __webpack_require__(0);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _styleModule = __webpack_require__(1);
+var _styleModule = __webpack_require__(2);
 
 var _styleModule2 = _interopRequireDefault(_styleModule);
 
@@ -495,25 +362,27 @@ var propTypes = {
   left: _propTypes2.default.string,
   top: _propTypes2.default.string,
   center: _propTypes2.default.bool,
-  isOpen: _propTypes2.default.bool,
-  isCloseButton: _propTypes2.default.bool,
-  onRequestClose: _propTypes2.default.func,
+  zIndex: _propTypes2.default.number,
 
-  onModalUpdate: _propTypes2.default.func.isRequired,
-  onModalSelect: _propTypes2.default.func.isRequired
+  isCloseButton: _propTypes2.default.bool.isRequired,
+  onRequestClose: _propTypes2.default.func.isRequired,
+
+  id: _propTypes2.default.string,
+  onModalSelect: _propTypes2.default.func
 };
 
 var defaultProps = {
   className: '',
-  style: undefined,
+  style: {},
   width: '50%',
   height: 'auto',
-  left: '0',
-  top: '0',
+  left: null,
+  top: null,
   center: true,
-  isCloseButton: true,
-  isOpen: false,
-  onRequestClose: null
+  zIndex: null,
+
+  id: null,
+  onModalSelect: null
 };
 
 var Modal = function (_Component) {
@@ -524,47 +393,44 @@ var Modal = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
 
-    _this.isCloseButton = props.onRequestClose === null ? false : props.isCloseButton;
     _this.onClose = _this.onClose.bind(_this);
+    _this.onSelect = _this.onSelect.bind(_this);
     return _this;
   }
 
   _createClass(Modal, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.props.onModalUpdate();
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      this.props.onModalUpdate(true);
-    }
-  }, {
     key: 'onClose',
     value: function onClose() {
       this.props.onRequestClose();
     }
   }, {
+    key: 'onSelect',
+    value: function onSelect() {
+      if (typeof this.props.onModalSelect === 'function') {
+        this.props.onModalSelect(this.props.id);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      if (!this.props.isOpen) return null;
-      var center = this.props.left !== '0' || this.props.top !== '0' ? false : this.props.center;
+      var center = this.props.center;
       var style = _extends({}, this.props.style, { width: this.props.width, height: this.props.height });
 
-      if (!center) {
+      if (this.props.left !== null || this.props.top !== null) {
+        center = false;
         style = _extends({}, style, { left: this.props.left, top: this.props.top });
       }
+
       return _react2.default.createElement(
         'div',
         {
           className: this.props.className + ' ' + _styleModule2.default.container + ' ' + (center ? _styleModule2.default.center : ''),
-          style: _extends({}, style),
+          style: _extends({}, style, { zIndex: this.props.zIndex }),
           role: 'button',
           tabIndex: 0,
-          onClick: this.props.onModalSelect,
-          'data-modal-content': ''
+          onClick: this.onSelect
         },
-        this.isCloseButton ? _react2.default.createElement('span', { className: _styleModule2.default.close, role: 'button', tabIndex: 0, onClick: this.onClose }) : null,
+        this.props.isCloseButton ? _react2.default.createElement('span', { className: _styleModule2.default.close, role: 'button', tabIndex: 0, onClick: this.onClose }) : null,
         this.props.children
       );
     }
@@ -579,7 +445,7 @@ Modal.defaultProps = defaultProps;
 exports.default = Modal;
 
 /***/ }),
-/* 7 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -589,150 +455,45 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author: Seok Kyun. Choi. 최석균 (Syaku)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @site: http://syaku.tistory.com
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @since: 2017. 9. 6.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+var _react = __webpack_require__(1);
 
-var _styleModule = __webpack_require__(1);
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(0);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _styleModule = __webpack_require__(2);
 
 var _styleModule2 = _interopRequireDefault(_styleModule);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var propTypes = {
+  zIndex: _propTypes2.default.number
+}; /**
+    * Modal Component
+    * @author: Seok Kyun. Choi. 최석균 (Syaku)
+    * @site: http://syaku.tistory.com
+    * @since: 2017. 8. 31.
+    */
 
-var ModalDOM = function () {
-  function ModalDOM(groupId, id, isOverlay) {
-    _classCallCheck(this, ModalDOM);
 
-    // max zIndex
-    this.zIndex = 3000;
-    this.group = groupId;
-    this.id = id;
+var defaultProps = {
+  zIndex: null
+};
 
-    this.document = document;
-    this.body = document.body;
+var Overlay = function Overlay(props) {
+  return _react2.default.createElement('div', { className: _styleModule2.default.overlay, style: { zIndex: props.zIndex } });
+};
 
-    this.rootNode = this.document.getElementById(groupId);
+Overlay.propTypes = propTypes;
+Overlay.defaultProps = defaultProps;
 
-    this.overlayNode = null;
-    this.modalNode = null;
-
-    if (!this.rootNode) {
-      this.rootNode = this.document.createElement('div');
-      this.rootNode.setAttribute('id', groupId);
-      this.rootNode.setAttribute('data-modal', '');
-
-      if (isOverlay) {
-        this.overlayNode = this.document.createElement('div');
-        this.overlayNode.setAttribute('data-modal-overlay', '');
-        this.overlayNode.setAttribute('class', _styleModule2.default.overlay);
-        this.rootNode.appendChild(this.overlayNode);
-      }
-
-      this.body.appendChild(this.rootNode);
-    }
-
-    this.createModal(id);
-  }
-
-  _createClass(ModalDOM, [{
-    key: 'createModal',
-    value: function createModal(id) {
-      this.modalNode = this.document.getElementById(id);
-      if (!this.modalNode) {
-        this.modalNode = this.document.createElement('div');
-        this.modalNode.setAttribute('id', id);
-        this.modalNode.setAttribute('data-modal-container', '');
-        this.rootNode.appendChild(this.modalNode);
-      }
-    }
-
-    /**
-     * 모달을 선택하면 zIndex를 조절하여 맨 앞으로 보이게 해준다.
-     * @author Seok Kyun. Choi. 최석균 (Syaku)
-     * @param {any} group
-     * @param {any} id
-     * @memberof ModalDOM
-     */
-
-  }, {
-    key: 'zIndexUpdate',
-    value: function zIndexUpdate(group, id) {
-      var _this = this;
-
-      var rootNode = this.document.getElementById(group);
-      var groupNode = Array.from(rootNode.querySelectorAll('[data-modal-container]'));
-
-      groupNode.forEach(function (node) {
-        var ele = _this.document.getElementById(node.id).querySelector('[data-modal-content]');
-        if (ele) {
-          var zIndex = node.id === id ? _this.zIndex + 1 : _this.zIndex;
-          ele.style.zIndex = zIndex;
-        }
-      });
-    }
-  }, {
-    key: 'update',
-    value: function update() {
-      var modalNodes = this.rootNode.querySelectorAll('[data-modal-content]');
-      var overlayNode = this.overlayNode === null ? this.rootNode.querySelector('[data-modal-overlay]') : this.overlayNode;
-
-      // overlay 제거
-      if (overlayNode != null && overlayNode.style) {
-        if (modalNodes.length === 0) {
-          overlayNode.style.display = 'none';
-        } else {
-          overlayNode.style.display = 'block';
-        }
-        // this.overlayNode.style.zIndex = this.zIndex + this.getOrderIndex(this.group);
-        overlayNode.style.zIndex = this.zIndex;
-      }
-      // render 되면서 상실되고 새로만들어진 id 가 생긴다. id가 없는 경우 처리하지 않는 다.
-      var modalContentNode = this.document.getElementById(this.id);
-
-      if (modalContentNode) {
-        modalContentNode = modalContentNode.querySelector('[data-modal-content]');
-        if (modalContentNode) {
-          // modalContentNode.style.zIndex = this.zIndex + this.getOrderIndex(this.id);
-          modalContentNode.style.zIndex = this.zIndex;
-        }
-      }
-    }
-  }, {
-    key: 'destroy',
-    value: function destroy() {
-      var rootNode = this.document.getElementById(this.group);
-      if (rootNode) {
-        this.body.removeChild(rootNode);
-      }
-    }
-  }, {
-    key: 'getRootNode',
-    value: function getRootNode() {
-      return this.rootNode;
-    }
-  }, {
-    key: 'getOverlayNode',
-    value: function getOverlayNode() {
-      return this.overlayNode;
-    }
-  }, {
-    key: 'getModalNode',
-    value: function getModalNode() {
-      return this.modalNode;
-    }
-  }]);
-
-  return ModalDOM;
-}();
-
-exports.default = ModalDOM;
+exports.default = Overlay;
 
 /***/ }),
-/* 8 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -742,7 +503,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Modal = __webpack_require__(5);
+var _Modal = __webpack_require__(3);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -756,7 +517,7 @@ exports.default = _Modal2.default; /**
                                     */
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -771,9 +532,9 @@ exports.default = _Modal2.default; /**
 
 
 
-var emptyFunction = __webpack_require__(11);
-var invariant = __webpack_require__(12);
-var ReactPropTypesSecret = __webpack_require__(10);
+var emptyFunction = __webpack_require__(9);
+var invariant = __webpack_require__(10);
+var ReactPropTypesSecret = __webpack_require__(8);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -822,7 +583,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -843,7 +604,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -887,7 +648,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
-/* 12 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -948,259 +709,10 @@ function invariant(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-module.exports = __webpack_require__(16);
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var encode = __webpack_require__(3);
-var alphabet = __webpack_require__(0);
-
-// Ignore all milliseconds before a certain time to reduce the size of the date entropy without sacrificing uniqueness.
-// This number should be updated every year or so to keep the generated id short.
-// To regenerate `new Date() - 0` and bump the version. Always bump the version!
-var REDUCE_TIME = 1459707606518;
-
-// don't change unless we change the algos or REDUCE_TIME
-// must be an integer and less than 16
-var version = 6;
-
-// Counter is used when shortid is called multiple times in one second.
-var counter;
-
-// Remember the last time shortid was called in case counter is needed.
-var previousSeconds;
-
-/**
- * Generate unique id
- * Returns string id
- */
-function build(clusterWorkerId) {
-
-    var str = '';
-
-    var seconds = Math.floor((Date.now() - REDUCE_TIME) * 0.001);
-
-    if (seconds === previousSeconds) {
-        counter++;
-    } else {
-        counter = 0;
-        previousSeconds = seconds;
-    }
-
-    str = str + encode(alphabet.lookup, version);
-    str = str + encode(alphabet.lookup, clusterWorkerId);
-    if (counter > 0) {
-        str = str + encode(alphabet.lookup, counter);
-    }
-    str = str + encode(alphabet.lookup, seconds);
-
-    return str;
-}
-
-module.exports = build;
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var alphabet = __webpack_require__(0);
-
-/**
- * Decode the id to get the version and worker
- * Mainly for debugging and testing.
- * @param id - the shortid-generated id.
- */
-function decode(id) {
-    var characters = alphabet.shuffled();
-    return {
-        version: characters.indexOf(id.substr(0, 1)) & 0x0f,
-        worker: characters.indexOf(id.substr(1, 1)) & 0x0f
-    };
-}
-
-module.exports = decode;
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var alphabet = __webpack_require__(0);
-var encode = __webpack_require__(3);
-var decode = __webpack_require__(15);
-var build = __webpack_require__(14);
-var isValid = __webpack_require__(17);
-
-// if you are using cluster or multiple servers use this to make each instance
-// has a unique value for worker
-// Note: I don't know if this is automatically set when using third
-// party cluster solutions such as pm2.
-var clusterWorkerId = __webpack_require__(20) || 0;
-
-/**
- * Set the seed.
- * Highly recommended if you don't want people to try to figure out your id schema.
- * exposed as shortid.seed(int)
- * @param seed Integer value to seed the random alphabet.  ALWAYS USE THE SAME SEED or you might get overlaps.
- */
-function seed(seedValue) {
-    alphabet.seed(seedValue);
-    return module.exports;
-}
-
-/**
- * Set the cluster worker or machine id
- * exposed as shortid.worker(int)
- * @param workerId worker must be positive integer.  Number less than 16 is recommended.
- * returns shortid module so it can be chained.
- */
-function worker(workerId) {
-    clusterWorkerId = workerId;
-    return module.exports;
-}
-
-/**
- *
- * sets new characters to use in the alphabet
- * returns the shuffled alphabet
- */
-function characters(newCharacters) {
-    if (newCharacters !== undefined) {
-        alphabet.characters(newCharacters);
-    }
-
-    return alphabet.shuffled();
-}
-
-/**
- * Generate unique id
- * Returns string id
- */
-function generate() {
-  return build(clusterWorkerId);
-}
-
-// Export all other functions as properties of the generate function
-module.exports = generate;
-module.exports.generate = generate;
-module.exports.seed = seed;
-module.exports.worker = worker;
-module.exports.characters = characters;
-module.exports.decode = decode;
-module.exports.isValid = isValid;
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var alphabet = __webpack_require__(0);
-
-function isShortId(id) {
-    if (!id || typeof id !== 'string' || id.length < 6 ) {
-        return false;
-    }
-
-    var characters = alphabet.characters();
-    var len = id.length;
-    for(var i = 0; i < len;i++) {
-        if (characters.indexOf(id[i]) === -1) {
-            return false;
-        }
-    }
-    return true;
-}
-
-module.exports = isShortId;
-
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var crypto = typeof window === 'object' && (window.crypto || window.msCrypto); // IE 11 uses window.msCrypto
-
-function randomByte() {
-    if (!crypto || !crypto.getRandomValues) {
-        return Math.floor(Math.random() * 256) & 0x30;
-    }
-    var dest = new Uint8Array(1);
-    crypto.getRandomValues(dest);
-    return dest[0] & 0x30;
-}
-
-module.exports = randomByte;
-
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// Found this seed-based random generator somewhere
-// Based on The Central Randomizer 1.3 (C) 1997 by Paul Houle (houle@msc.cornell.edu)
-
-var seed = 1;
-
-/**
- * return a random number based on a seed
- * @param seed
- * @returns {number}
- */
-function getNextValue() {
-    seed = (seed * 9301 + 49297) % 233280;
-    return seed/(233280.0);
-}
-
-function setSeed(_seed_) {
-    seed = _seed_;
-}
-
-module.exports = {
-    nextValue: getNextValue,
-    seed: setSeed
-};
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = 0;
-
-
-/***/ }),
-/* 21 */
+/* 11 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_21__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_11__;
 
 /***/ })
 /******/ ]);

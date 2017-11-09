@@ -1,62 +1,66 @@
-/**
- * Modal Component
- * @author: Seok Kyun. Choi. 최석균 (Syaku)
- * @site: http://syaku.tistory.com
- * @since: 2017. 8. 31.
- */
+import React from 'react';
 import ReactDOM from 'react-dom';
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
-
-import ModalDOM from '_components/ModalDOM';
 import ModalComponent from '_components/Modal';
+import Overlay from '_components/Overlay';
 
 const propTypes = {
-  group: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  id: PropTypes.string,
+
+  isOpen: PropTypes.bool,
+  onRequestClose: PropTypes.func,
+  isCloseButton: PropTypes.bool,
   isOverlay: PropTypes.bool,
 
-  // afterOpen: PropTypes.func,
-  // beforeOpen: PropTypes.func,
-  // doneClose: PropTypes.func,
+  zIndex: PropTypes.number,
+
+  beforeOpen: PropTypes.func,
+  afterOpen: PropTypes.func,
+  doneClose: PropTypes.func,
 };
 
 const defaultProps = {
-  group: undefined,
+  id: null,
+  isOpen: false,
+  onRequestClose: null,
+  isCloseButton: true,
   isOverlay: true,
 
-  // afterOpen: null,
-  // beforeOpen: null,
-  // doneClose: null,
+  zIndex: null,
+
+  beforeOpen: null,
+  afterOpen: null,
+  doneClose: null,
 };
 
-class Modal extends Component {
+const modal = document.getElementById('react-modal');
+
+class Modal extends React.Component {
   constructor(props) {
     super(props);
 
-    this.id = shortid.generate();
-    this.group = props.group ? props.group : shortid.generate();
-    this.modalDOM = new ModalDOM(this.group, this.id, props.isOverlay);
+    this.id = props.id ? props.id : shortid.generate();
+    this.ele = document.createElement('div');
 
-    this.rootNode = null;
-    this.modalNode = null;
+    this.beforeOpen = props.isOpen;
+    this.afterOpen = props.isOpen;
+    this.doneClose = !props.isOpen;
 
-    this.onModalUpdate = this.onModalUpdate.bind(this);
-    this.onModalSelect = this.onModalSelect.bind(this);
-
-    this.beforeOpen = false;
-    this.afterOpen = false;
-    this.doneClose = true;
+    this.onRequestClose = this.onRequestClose.bind(this);
+    this.onEscClose = this.onEscClose.bind(this);
   }
 
   componentWillMount() {
     this.onEventBeforeOpen(this.props);
+    this.onEventAfterOpen(this.props);
+    this.onEventDoneClose(this.props);
   }
 
   componentDidMount() {
-    this.rootNode = this.modalDOM.getRootNode();
-    this.modalNode = this.modalDOM.getModalNode();
-    this.renderModal(this.props);
+    modal.appendChild(this.ele);
+    this.ele.addEventListener('keydown', this.onEscClose);
   }
 
   componentWillReceiveProps(newProps) {
@@ -66,29 +70,28 @@ class Modal extends Component {
     } else {
       this.doneClose = false;
     }
-    this.onEventBeforeOpen(newProps);
-    this.renderModal(newProps);
-    this.onEventDoneClose(newProps);
+  }
+
+  componentWillUpdate(nextProps) {
+    this.onEventBeforeOpen(nextProps);
   }
 
   componentDidUpdate() {
-    this.renderModal(this.props);
+    this.onEventAfterOpen(this.props);
+    this.onEventDoneClose(this.props);
   }
 
   componentWillUnmount() {
-    ReactDOM.unmountComponentAtNode(this.rootNode);
-    this.modalDOM.destroy();
+    this.ele.removeEventListener('keydown', this.onEscClose);
+    modal.removeChild(this.ele);
   }
 
-  onModalUpdate(isDid) {
-    this.modalDOM.update();
-    if (isDid) {
-      this.onEventAfterOpen(this.props);
-    }
+  onRequestClose() {
+    if (typeof this.props.onRequestClose === 'function') this.props.onRequestClose();
   }
 
-  onModalSelect() {
-    this.modalDOM.zIndexUpdate(this.group, this.id);
+  onEscClose(e) {
+    if (e.keyCode === 27) this.onRequestClose();
   }
 
   onEventBeforeOpen(props) {
@@ -109,21 +112,25 @@ class Modal extends Component {
     this.doneClose = true;
   }
 
-  renderModal(props) {
-    ReactDOM.unstable_renderSubtreeIntoContainer(
-      this,
-      <ModalComponent
-        {...props}
-        id={this.id}
-        onModalUpdate={this.onModalUpdate}
-        onModalSelect={this.onModalSelect}
-      />,
-      this.modalNode,
-    );
-  }
-
   render() {
-    return null;
+    return ReactDOM.createPortal(
+      [
+        this.props.isOverlay && this.props.isOpen ? <Overlay
+          key="reactModalOverlay"
+          zIndex={this.props.zIndex}
+        /> : null,
+        this.props.isOpen ?
+          <ModalComponent
+            {...this.props}
+            onRequestClose={this.onRequestClose}
+            key="reactModal"
+          >
+            {this.props.children}
+          </ModalComponent> :
+          null,
+      ],
+      this.ele,
+    );
   }
 }
 

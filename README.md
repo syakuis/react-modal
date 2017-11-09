@@ -2,6 +2,8 @@
 
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/dBWe5x6v050/0.jpg)](https://youtu.be/dBWe5x6v050)
 
+React 16 이상 버전만 지원합니다.
+
 - 여러개의 모달을 단계적으로 활성화 한다.
 - 모달들은 그룹화되며 배경은 1개만 활성화 된다. 모달을 선택하면 맨 앞으로 이동된다.
 - Event Trigger 를 지원한다.
@@ -17,7 +19,7 @@ or
 $ yarn add react-modal-syaku
 ```
 
-## setting
+## 일반 모달
 
 `./src/demo/index.js & ./src/demo/ModalConatiner.js` 참고하세요.
 
@@ -27,7 +29,27 @@ import Modal from 'react-modal-syaku';
 <Modal {...props}>
   <div>...</div>
 </Modal>
+```
 
+## 다중 모달
+
+```
+import Modal from 'react-modal-syaku';
+
+<GroupModal {...props}>
+  <Modal {...props}>
+    <div>...</div>
+  </Modal>
+  <Modal {...props}>
+    <div>...</div>
+  </Modal>
+</GroupModal>
+```
+
+
+## setting
+
+```
 const propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
@@ -41,9 +63,6 @@ const propTypes = {
   isCloseButton: PropTypes.bool,
   onRequestClose: PropTypes.func,
 
-  // modal 을 그룹으로 만든다.
-  group: PropTypes.string,
-
   // 배경
   isOverlay: PropTypes.bool,
 
@@ -55,7 +74,7 @@ const propTypes = {
 
 const defaultProps = {
   className: '',
-  style: undefined,
+  style: {},
   width: '50%',
   height: 'auto',
   left: '0',
@@ -65,7 +84,6 @@ const defaultProps = {
   isOpen: false,
   onRequestClose: null,
 
-  group: undefined,
   isOverlay: true,
 
   afterOpen: null,
