@@ -2,8 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
-
 import Overlay from '_components/Overlay';
+
+const doc = document;
+const body = doc.body;
+let reactModalOverlay = doc.getElementById('react-modal-overlay');
+if (!reactModalOverlay) {
+  reactModalOverlay = doc.createElement('div');
+  reactModalOverlay.setAttribute('id', 'react-modal-overlay');
+
+  body.insertBefore(
+    reactModalOverlay,
+    body.hasChildNodes() ? body.childNodes[0] : null);
+}
+
+const getName = (fn) => {
+  // ie 에서 type(func or class).name 은 undefined 이다.
+  if (fn.name) return fn.name;
+  return fn.toString().match(/^function\s*([^\s(]+)/)[1];
+};
 
 const propTypes = {
   isOverlay: PropTypes.bool,
@@ -12,15 +29,7 @@ const propTypes = {
 
 const defaultProps = {
   isOverlay: true,
-  zIndex: null,
-};
-
-const modal = document.getElementById('react-modal-overlay');
-
-const getName = (fn) => {
-  // ie 에서 type(func or class).name 은 undefined 이다.
-  if (fn.name) return fn.name;
-  return fn.toString().match(/^function\s*([^\s(]+)/)[1];
+  zIndex: 3000,
 };
 
 class GroupModal extends React.Component {
@@ -44,7 +53,7 @@ class GroupModal extends React.Component {
   }
 
   componentDidMount() {
-    modal.appendChild(this.ele);
+    reactModalOverlay.appendChild(this.ele);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,7 +61,7 @@ class GroupModal extends React.Component {
   }
 
   componentWillUnmount() {
-    modal.removeChild(this.ele);
+    reactModalOverlay.removeChild(this.ele);
   }
 
   onModalSelect(id) {

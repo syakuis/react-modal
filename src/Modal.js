@@ -5,10 +5,20 @@ import shortid from 'shortid';
 import ModalComponent from '_components/Modal';
 import Overlay from '_components/Overlay';
 
+const doc = document;
+const body = doc.body;
+let reactModal = doc.getElementById('react-modal');
+if (!reactModal) {
+  reactModal = doc.createElement('div');
+  reactModal.setAttribute('id', 'react-modal');
+
+  body.insertBefore(
+    reactModal,
+    body.hasChildNodes() ? body.childNodes[0] : null);
+}
+
 let selectId = null;
 let modalData = [];
-
-const rootNode = document.getElementById('react-modal');
 
 // 여러 모달중 마지막에 열린 모달 정보를 배열 첫번째에 담음.
 // 만약 닫힌 모달이면 배열에서 제거한다.
@@ -42,11 +52,11 @@ const modalSelect = (id) => {
 
 // selectId 정보를 이용하여 모든 모달의 zIndex 를 갱신한다.
 const zIndexUpdate = (zIndex) => {
-  const modalNode = Array.from(rootNode.querySelectorAll('[data-modal]'));
+  const modalNode = Array.from(reactModal.querySelectorAll('[data-modal]'));
   const zIndexNew = zIndex === null ? 1 : zIndex + 1;
 
   modalNode.forEach((ele) => {
-    const node = rootNode.querySelector(`[data-modal=${ele.dataset.modal}]`);
+    const node = reactModal.querySelector(`[data-modal=${ele.dataset.modal}]`);
     if (node) {
       node.style.zIndex = zIndex;
     }
@@ -82,14 +92,12 @@ const defaultProps = {
   isCloseButton: true,
   isOverlay: true,
 
-  zIndex: null,
+  zIndex: 3000,
 
   beforeOpen: null,
   afterOpen: null,
   doneClose: null,
 };
-
-const modal = document.getElementById('react-modal');
 
 class Modal extends React.Component {
   constructor(props) {
@@ -120,7 +128,7 @@ class Modal extends React.Component {
   }
 
   componentDidMount() {
-    modal.appendChild(this.ele);
+    reactModal.appendChild(this.ele);
 
     // if (this.props.isOpen && !this.isEventListener) {
     //   window.addEventListener('keydown', this.onEscClose);
@@ -163,7 +171,7 @@ class Modal extends React.Component {
 
   componentWillUnmount() {
     // window.removeEventListener('keydown', this.onEscClose);
-    modal.removeChild(this.ele);
+    reactModal.removeChild(this.ele);
   }
 
   onModalSelect(id) {

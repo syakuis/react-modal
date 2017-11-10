@@ -6,7 +6,7 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 import React from 'react';
 
-// import Modal from 'react-modal-syaku';
+// import Modal, { GroupModal } from 'react-modal-syaku';
 // import 'react-modal-syaku/dist/react-modal.css';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -61,7 +61,7 @@ class ModalContainer extends React.Component {
           onRequestClose={() => this.onOpen('isOpenOn2')}
         >
           <div>
-            Modal Popup
+            Modal isOpenOn2
             <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpenOn21')}>
               Modal Open 21
             </button>
@@ -71,7 +71,7 @@ class ModalContainer extends React.Component {
             onRequestClose={() => this.onOpen('isOpenOn21')}
           >
             <div>
-              Modal Popup
+              Modal isOpenOn21
             </div>
           </Modal>
         </Modal>
@@ -80,12 +80,12 @@ class ModalContainer extends React.Component {
           onRequestClose={() => this.onOpen('isOpenOn')}
         >
           <div>
-            Modal Popup
+            Modal isOpenOn
           </div>
         </Modal>
         <h3>Basic Modal</h3>
         <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpen')}>
-          Modal Open 1
+          Modal isOpen
         </button>
 
         <Modal
@@ -93,9 +93,9 @@ class ModalContainer extends React.Component {
           onRequestClose={() => this.onOpen('isOpen')}
         >
           <div>
-            Modal
+            Modal isOpen
             <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpenOn')}>
-              Modal Open 2
+              Modal isOpenOn
             </button>
           </div>
         </Modal>
@@ -104,16 +104,16 @@ class ModalContainer extends React.Component {
         <h3>Group Modal</h3>
 
         <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpenGroup')}>
-          Group Modal Open
+          Group Modal isOpenGroup
         </button>
         <GroupModal>
           <Modal
             onRequestClose={() => this.onOpen('isOpenGroup')}
             isOpen={this.state.isOpenGroup}
           >
-            Top Modal 5
+            Top Modal isOpenGroup
             <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpenGroup2')}>
-              모달 열기6
+              모달 열기 isOpenGroup2
             </button>
           </Modal>
 
@@ -127,7 +127,7 @@ class ModalContainer extends React.Component {
             doneClose={() => { console.log('doneClose render', this.nodeEvent2); this.onEvent('doneClose', true); }}
           >
             <div ref={(node) => { this.nodeEvent2 = node; }}>
-              Group Modal Open {this.state.eventState}
+              Group Modal isOpenGroup2 {this.state.eventState}
             </div>
           </Modal>
         </GroupModal>
@@ -148,7 +148,7 @@ class ModalContainer extends React.Component {
           doneClose={() => { console.log('doneClose render', this.nodeEvent); this.onEvent('doneClose', true); }}
         >
           <div ref={(node) => { this.nodeEvent = node; }}>
-            Modal Trigger {this.state.eventState}
+            Modal isOpenEvent {this.state.eventState}
           </div>
         </Modal>
 
@@ -159,7 +159,7 @@ class ModalContainer extends React.Component {
           <div>
             Modal isOpenOn31
             <button type="button" className="btn btn-default" onClick={() => { this.onOpen('isOpenOn2'); this.onOpen('isOpenOn21'); }}>
-              Modal Open 21
+              Modal isOpenOn21
             </button>
           </div>
         </Modal>

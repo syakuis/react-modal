@@ -2,13 +2,14 @@
 
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/dBWe5x6v050/0.jpg)](https://youtu.be/dBWe5x6v050)
 
-React 16 이상 버전만 지원합니다.
+> React 16 이상 버전만 지원합니다.  IE 11 이상만 지원합니다.
 
-- 여러개의 모달을 단계적으로 활성화 한다.
-- 모달들은 그룹화되며 배경은 1개만 활성화 된다. 모달을 선택하면 맨 앞으로 이동된다.
-- Event Trigger 를 지원한다.
-- 모달을 중앙 혹은 원하는 위치에 배치할 수 있다.
-- esc 키를 이용한 모달 닫기 (개발중...)
+- 여러 개의 모달을 함께 혹은 개별적으로 제어할 수 있습니다.
+- 여러 개의 모달중 선택된 모달을 최상위에 노출됩니다.
+- 모달 코드가 순서와 상관없이 마지막에 활성화된 모달이 최상위에 노출됩니다.
+- 모달 상태에 따라 이벤트 트리거 (EventListener) 를 사용할 수 있습니다.
+- 모달을 중앙 혹은 원하는 좌표 위치에 배치할 수 있습니다.
+- esc 키를 이용하여 모달 닫을 수 있습니다. (개발중...)
 
 ### 주의
 
@@ -21,11 +22,11 @@ React 16 이상 버전만 지원합니다.
   <button type="button" className="btn btn-default" onClick={() => { this.onOpen('id=2'); }}>
 </Modal>
 
-// 해결
+// 해결방법
 <button type="button" className="btn btn-default" onClick={() => { this.onOpen('id=1'); this.onOpen('id=2'); }}>
 ```
 
-위와 같이 modal id 3번이 modal id 1 속에 있는 id 2를 바로 열 수 없습니다. id 1 번을 열고 2번을 열 수 있습니다.
+위와 같이 `id=3`이 `id=1`에 속한 `id=2`를 바로 열 수 없습니다. `id=1`을 열고 `id=2`를 열 수 있습니다.
 
 ## Install
 
@@ -35,6 +36,10 @@ $ npm install react-modal-syaku
 or
 
 $ yarn add react-modal-syaku
+
+
+import Modal, { GroupModal } from 'react-modal-syaku';
+import 'react-modal-syaku/dist/react-modal.css';
 ```
 
 ## 일반 모달
@@ -42,55 +47,8 @@ $ yarn add react-modal-syaku
 `./src/demo/index.js & ./src/demo/ModalConatiner.js` 참고하세요.
 
 ```
-import Modal from 'react-modal-syaku';
-
-<Modal {...props}>
-  <div>...</div>
-</Modal>
-```
-
-## 다중 모달
-
-```
-import Modal from 'react-modal-syaku';
-
-<GroupModal {...props}>
-  <Modal {...props}>
-    <div>...</div>
-  </Modal>
-  <Modal {...props}>
-    <div>...</div>
-  </Modal>
-</GroupModal>
-```
-
-
-## setting
-
-```
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  style: PropTypes.shape(),
-  width: PropTypes.string,
-  height: PropTypes.string,
-  left: PropTypes.string,
-  top: PropTypes.string,
-  center: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  isCloseButton: PropTypes.bool,
-  onRequestClose: PropTypes.func,
-
-  // 배경
-  isOverlay: PropTypes.bool,
-
-  // event trigger
-  afterOpen: PropTypes.func,
-  beforeOpen: PropTypes.func,
-  doneClose: PropTypes.func,
-};
-
-const defaultProps = {
+// default props
+{
   className: '',
   style: {},
   width: '50%',
@@ -102,22 +60,45 @@ const defaultProps = {
   isOpen: false,
   onRequestClose: null,
 
-  isOverlay: true,
+  isOverlay: true, // 모달 배경 사용여부
+
+  zIndex: 3000,
 
   afterOpen: null,
   beforeOpen: null,
   doneClose: null,
 };
+
+<Modal {...props}>
+  <div>...</div>
+</Modal>
 ```
 
-## demo
+## 다중 모달
+
+```
+// default props
+{
+  isOverlay: true, // 배경 모달 사용여부
+  zIndex: 3000,
+}
+
+<GroupModal {...props}>
+  <Modal {...props}>
+    <div>...</div>
+  </Modal>
+  <Modal {...props}>
+    <div>...</div>
+  </Modal>
+</GroupModal>
+```
+
+## dev server start
 
 ```
 // dev
 $ npm run serv:dev
 
-// demo
-$ npm run serv:demo
 ```
 
 http://localhost:8088
