@@ -6,7 +6,6 @@ import shortid from 'shortid';
 import Overlay from '_components/Overlay';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
   isOverlay: PropTypes.bool,
   zIndex: PropTypes.number,
 };
@@ -16,7 +15,7 @@ const defaultProps = {
   zIndex: null,
 };
 
-const modal = document.getElementById('react-modal');
+const modal = document.getElementById('react-modal-overlay');
 
 const getName = (fn) => {
   // ie 에서 type(func or class).name 은 undefined 이다.
@@ -30,6 +29,7 @@ class GroupModal extends React.Component {
     this.ele = document.createElement('div');
 
     this.Children = null;
+    this.id = [];
 
     this.state = {
       overlay: false,
@@ -39,22 +39,41 @@ class GroupModal extends React.Component {
     this.onModalSelect = this.onModalSelect.bind(this);
   }
 
+  componentWillMount() {
+    this.setChildren(this.props);
+  }
+
   componentDidMount() {
     modal.appendChild(this.ele);
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setChildren(nextProps);
+  }
+
+  componentWillUnmount() {
+    modal.removeChild(this.ele);
+  }
+
+  onModalSelect(id) {
+    this.setState({ selectId: id });
+  }
+
+  setChildren(props) {
     let openCount = 0;
 
-    this.Children = React.Children.map(nextProps.children, (children) => {
+    this.Children = React.Children.map(props.children, (children, index) => {
       if (getName(children.type) === 'Modal') {
         if (children.props.isOpen) openCount += 1;
-        const id = children.props.id ? children.props.id : shortid.generate();
+        if (!this.id[index]) {
+          this.id[index] = shortid.generate();
+        }
+
         return React.cloneElement(children, {
           onModalSelect: this.onModalSelect,
           isOverlay: false,
           zIndex: this.zIndex,
-          id,
+          id: this.id[index],
         });
       }
       return children;
@@ -67,14 +86,6 @@ class GroupModal extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    modal.removeChild(this.ele);
-  }
-
-  onModalSelect(id) {
-    this.setState({ selectId: id });
-  }
-
   zIndexTop() {
     return this.props.zIndex !== null ? this.props.zIndex + 1 : 1;
   }
@@ -85,6 +96,7 @@ class GroupModal extends React.Component {
         const zIndex = children.props.id === this.state.selectId ?
           this.zIndexTop() : this.props.zIndex;
         return React.cloneElement(children, {
+          ...children.props,
           zIndex,
         });
       }
@@ -93,7 +105,7 @@ class GroupModal extends React.Component {
 
     return ReactDOM.createPortal(
       [
-        this.props.isOverlay && this.state.overlay ? <Overlay key="reactGroupModalOverlay" zIndex={this.zIndex} /> : null,
+        this.props.isOverlay && this.state.overlay ? <Overlay key="reactGroupModalOverlay" zIndex={this.props.zIndex} /> : null,
         Children,
       ],
       this.ele,

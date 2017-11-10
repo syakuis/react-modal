@@ -7,7 +7,7 @@
 import React from 'react';
 
 // import Modal from 'react-modal-syaku';
-// import 'react-modal-syaku/dist/react-modal-syaku.css';
+// import 'react-modal-syaku/dist/react-modal.css';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
@@ -26,6 +26,10 @@ class ModalContainer extends React.Component {
       eventState: '',
       isOpen: false,
       isOpenOn: true,
+      isOpenOn2: false,
+      isOpenOn21: false,
+      isOpenOn3: true,
+      isOpenOn31: true,
       isOpenGroup: false,
       isOpenGroup2: false,
       isOpenEvent: false,
@@ -44,6 +48,33 @@ class ModalContainer extends React.Component {
   render() {
     return (
       <div>
+        <Modal
+          isOpen={this.state.isOpenOn3}
+          onRequestClose={() => this.onOpen('isOpenOn3')}
+        >
+          <div>
+            Modal isOpenOn3
+          </div>
+        </Modal>
+        <Modal
+          isOpen={this.state.isOpenOn2}
+          onRequestClose={() => this.onOpen('isOpenOn2')}
+        >
+          <div>
+            Modal Popup
+            <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpenOn21')}>
+              Modal Open 21
+            </button>
+          </div>
+          <Modal
+            isOpen={this.state.isOpenOn21}
+            onRequestClose={() => this.onOpen('isOpenOn21')}
+          >
+            <div>
+              Modal Popup
+            </div>
+          </Modal>
+        </Modal>
         <Modal
           isOpen={this.state.isOpenOn}
           onRequestClose={() => this.onOpen('isOpenOn')}
@@ -118,6 +149,18 @@ class ModalContainer extends React.Component {
         >
           <div ref={(node) => { this.nodeEvent = node; }}>
             Modal Trigger {this.state.eventState}
+          </div>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.isOpenOn31}
+          onRequestClose={() => this.onOpen('isOpenOn31')}
+        >
+          <div>
+            Modal isOpenOn31
+            <button type="button" className="btn btn-default" onClick={() => { this.onOpen('isOpenOn2'); this.onOpen('isOpenOn21'); }}>
+              Modal Open 21
+            </button>
           </div>
         </Modal>
       </div>

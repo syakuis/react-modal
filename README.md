@@ -8,6 +8,24 @@ React 16 이상 버전만 지원합니다.
 - 모달들은 그룹화되며 배경은 1개만 활성화 된다. 모달을 선택하면 맨 앞으로 이동된다.
 - Event Trigger 를 지원한다.
 - 모달을 중앙 혹은 원하는 위치에 배치할 수 있다.
+- esc 키를 이용한 모달 닫기 (개발중...)
+
+### 주의
+
+```
+<Modal id=1>
+  <Modal id=2 />
+</Modal>
+
+<Modal id=3>
+  <button type="button" className="btn btn-default" onClick={() => { this.onOpen('id=2'); }}>
+</Modal>
+
+// 해결
+<button type="button" className="btn btn-default" onClick={() => { this.onOpen('id=1'); this.onOpen('id=2'); }}>
+```
+
+위와 같이 modal id 3번이 modal id 1 속에 있는 id 2를 바로 열 수 없습니다. id 1 번을 열고 2번을 열 수 있습니다.
 
 ## Install
 

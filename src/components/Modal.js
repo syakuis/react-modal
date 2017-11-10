@@ -17,7 +17,6 @@ const propTypes = {
   left: PropTypes.string,
   top: PropTypes.string,
   center: PropTypes.bool,
-  zIndex: PropTypes.number,
 
   isCloseButton: PropTypes.bool.isRequired,
   onRequestClose: PropTypes.func.isRequired,
@@ -34,7 +33,6 @@ const defaultProps = {
   left: null,
   top: null,
   center: true,
-  zIndex: null,
 
   id: null,
   onModalSelect: null,
@@ -45,17 +43,10 @@ class Modal extends Component {
     super(props);
 
     this.onClose = this.onClose.bind(this);
-    this.onSelect = this.onSelect.bind(this);
   }
 
   onClose() {
     this.props.onRequestClose();
-  }
-
-  onSelect() {
-    if (typeof this.props.onModalSelect === 'function') {
-      this.props.onModalSelect(this.props.id);
-    }
   }
 
   render() {
@@ -70,11 +61,12 @@ class Modal extends Component {
     return (
       <div
         className={`${this.props.className} ${s.container} ${center ? s.center : ''}`}
-        style={{ ...style, zIndex: this.props.zIndex }}
+        style={style}
         role="button"
         tabIndex={0}
-        onClick={this.onSelect}
+        onClick={() => this.props.onModalSelect(this.props.id)}
       >
+        {this.props.id}
         {
           this.props.isCloseButton ? <span className={s.close} role="button" tabIndex={0} onClick={this.onClose} /> : null
         }
