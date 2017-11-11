@@ -66,7 +66,6 @@ class Modal extends Component {
         tabIndex={0}
         onClick={() => this.props.onModalSelect(this.props.id)}
       >
-        {this.props.id}
         {
           this.props.isCloseButton ? <span className={s.close} role="button" tabIndex={0} onClick={this.onClose} /> : null
         }

@@ -1333,7 +1333,6 @@ var Modal = function (_Component) {
             return _this2.props.onModalSelect(_this2.props.id);
           }
         },
-        this.props.id,
         this.props.isCloseButton ? _react2.default.createElement('span', { className: _styleModule2.default.close, role: 'button', tabIndex: 0, onClick: this.onClose }) : null,
         this.props.children
       );
