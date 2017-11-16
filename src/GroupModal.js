@@ -17,11 +17,11 @@ if (!reactModalOverlay) {
   );
 }
 
-const getName = (fn) => {
-  // ie 에서 type(func or class).name 은 undefined 이다.
-  if (fn.name) return fn.name;
-  return fn.toString().match(/^function\s*([^\s(]+)/)[1];
-};
+// const getName = (fn) => {
+//   // ie 에서 type(func or class).name 은 undefined 이다.
+//   if (fn.name) return fn.name;
+//   return fn.toString().match(/^function\s*([^\s(]+)/)[1];
+// };
 
 const propTypes = {
   isOverlay: PropTypes.bool,
@@ -77,20 +77,21 @@ class GroupModal extends React.Component {
     let openCount = 0;
 
     this.Children = React.Children.map(props.children, (children, index) => {
-      if (getName(children.type) === 'Modal') {
-        if (children.props.isOpen) openCount += 1;
-        if (!this.id[index]) {
-          this.id[index] = shortid.generate();
-        }
-
-        return React.cloneElement(children, {
-          onModalSelect: this.onModalSelect,
-          isOverlay: false,
-          zIndex: this.zIndex,
-          id: this.id[index],
-        });
+      // console.log(getName(children.type));
+      // if (getName(children.type) === 'Modal') {
+      if (children.props.isOpen) openCount += 1;
+      if (!this.id[index]) {
+        this.id[index] = shortid.generate();
       }
-      return children;
+
+      return React.cloneElement(children, {
+        onModalSelect: this.onModalSelect,
+        isOverlay: false,
+        zIndex: this.zIndex,
+        id: this.id[index],
+      });
+      // }
+      // return children;
     });
 
     if (openCount > 0) {
@@ -106,15 +107,16 @@ class GroupModal extends React.Component {
 
   render() {
     const Children = React.Children.map(this.Children, (children) => {
-      if (getName(children.type) === 'Modal') {
-        const zIndex = children.props.id === this.state.selectId ?
-          this.zIndexTop() : this.props.zIndex;
-        return React.cloneElement(children, {
-          ...children.props,
-          zIndex,
-        });
-      }
-      return children;
+      // console.log(getName(children.type));
+      // if (getName(children.type) === 'Modal') {
+      const zIndex = children.props.id === this.state.selectId ?
+        this.zIndexTop() : this.props.zIndex;
+      return React.cloneElement(children, {
+        ...children.props,
+        zIndex,
+      });
+      // }
+      // return children;
     });
 
     return ReactDOM.createPortal(
