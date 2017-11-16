@@ -5,21 +5,28 @@
  * @since: 2017. 8. 31.
  */
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import s from '_resources/style.module.css';
 
-// const propTypes = {
-//   zIndex: PropTypes.number,
-// };
+const propTypes = {
+  overlayClassName: PropTypes.string,
+  overlayStyle: PropTypes.shape({}),
+};
 
-// const defaultProps = {
-//   zIndex: null,
-// };
+const defaultProps = {
+  overlayClassName: undefined,
+  overlayStyle: {},
+};
 
-const Overlay = () => <div className={s.overlay} />;
-// const Overlay = props => <div className={s.overlay} style={{ zIndex: props.zIndex }} />;
+const Overlay = (props) => {
+  const overlayClassName = props.overlayClassName ? `${s.overlay} ${props.overlayClassName}` : s.overlay;
 
-// Overlay.propTypes = propTypes;
-// Overlay.defaultProps = defaultProps;
+  return (
+    <div style={props.overlayStyle ? props.overlayStyle : {}} className={overlayClassName} />
+  );
+};
+
+Overlay.propTypes = propTypes;
+Overlay.defaultProps = defaultProps;
 
 export default Overlay;

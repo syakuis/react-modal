@@ -11,3 +11,4 @@ RUNNING_PID
 *.tgz
 
 node_modules/
+demo/

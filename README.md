@@ -2,14 +2,14 @@
 
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/dBWe5x6v050/0.jpg)](https://youtu.be/dBWe5x6v050)
 
-> React 16 이상 버전만 지원합니다.  IE 11 이상만 지원합니다.
+> React 16 이상 버전만 지원합니다.  IE 11 이상만 지원합니다. 크롬, 사파리, 파이어폭스, IE 11 에서 테스트하였습니다.
 
 - 여러 개의 모달을 함께 혹은 개별적으로 제어할 수 있습니다.
 - 여러 개의 모달중 선택된 모달을 최상위에 노출됩니다.
 - 모달 코드가 순서와 상관없이 마지막에 활성화된 모달이 최상위에 노출됩니다.
 - 모달 상태에 따라 이벤트 트리거 (EventListener) 를 사용할 수 있습니다.
 - 모달을 중앙 혹은 원하는 좌표 위치에 배치할 수 있습니다.
-- esc 키를 이용하여 모달 닫을 수 있습니다. (개발중...)
+- esc 키를 이용하여 모달 닫을 수 있습니다.
 
 ### 주의
 
@@ -53,14 +53,17 @@ import 'react-modal-syaku/dist/react-modal.css';
   style: {},
   width: '50%',
   height: 'auto',
-  left: '0',
-  top: '0',
+  left: null, // null 이 아니면 center 옵션이 무시된다.
+  top: null, // null 이 아니면 center 옵션이 무시된다.
   center: true,
   isCloseButton: true,
+  isEscClose: true,
   isOpen: false,
-  onRequestClose: null,
+  onRequestClose: null, // 모달을 닫을때 사용되는 함수
 
   isOverlay: true, // 모달 배경 사용여부
+  overlayClassName: null,
+  overlayStyle: {},
 
   zIndex: 3000,
 
@@ -80,6 +83,9 @@ import 'react-modal-syaku/dist/react-modal.css';
 // default props
 {
   isOverlay: true, // 배경 모달 사용여부
+  overlayClassName: null,
+  overlayStyle: {},
+
   zIndex: 3000,
 }
 
@@ -97,7 +103,7 @@ import 'react-modal-syaku/dist/react-modal.css';
 
 ```
 // dev
-$ npm run serv:dev
+$ yarn serv:dev
 
 ```
 
@@ -106,6 +112,6 @@ http://localhost:8088
 ## build
 
 ```
-$ npm run build:prod
+$ yarn build:prod
 ```
 

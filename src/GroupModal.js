@@ -5,15 +5,16 @@ import shortid from 'shortid';
 import Overlay from '_components/Overlay';
 
 const doc = document;
-const body = doc.body;
+const docBody = doc.body;
 let reactModalOverlay = doc.getElementById('react-modal-overlay');
 if (!reactModalOverlay) {
   reactModalOverlay = doc.createElement('div');
   reactModalOverlay.setAttribute('id', 'react-modal-overlay');
 
-  body.insertBefore(
+  docBody.insertBefore(
     reactModalOverlay,
-    body.hasChildNodes() ? body.childNodes[0] : null);
+    docBody.hasChildNodes() ? docBody.childNodes[0] : null,
+  );
 }
 
 const getName = (fn) => {
@@ -24,11 +25,15 @@ const getName = (fn) => {
 
 const propTypes = {
   isOverlay: PropTypes.bool,
+  overlayClassName: PropTypes.string,
+  overlayStyle: PropTypes.shape({}),
   zIndex: PropTypes.number,
 };
 
 const defaultProps = {
   isOverlay: true,
+  overlayClassName: null,
+  overlayStyle: null,
   zIndex: 3000,
 };
 
@@ -114,7 +119,12 @@ class GroupModal extends React.Component {
 
     return ReactDOM.createPortal(
       [
-        this.props.isOverlay && this.state.overlay ? <Overlay key="reactGroupModalOverlay" zIndex={this.props.zIndex} /> : null,
+        this.props.isOverlay && this.state.overlay ?
+          <Overlay
+            overlayClassName={this.props.overlayClassName}
+            overlayStyle={this.props.overlayStyle}
+            key="reactGroupModalOverlay"
+          /> : null,
         Children,
       ],
       this.ele,

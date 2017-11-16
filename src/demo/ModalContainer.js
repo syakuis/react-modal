@@ -3,17 +3,20 @@
  * @site: http://syaku.tistory.com
  * @since: 2017. 8. 22.
  */
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
+/* eslint global-require: "off" */
 import React from 'react';
-
-// import Modal, { GroupModal } from 'react-modal-syaku';
-// import 'react-modal-syaku/dist/react-modal.css';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 
-import Modal from '../index';
-import GroupModal from '../GroupModal';
+import '_resources/demo.css';
+
+const Modal = (process.env.SOURCE_TARGET === 'node') ? require('react-modal-syaku').default : require('../Modal').default;
+const GroupModal = (process.env.SOURCE_TARGET === 'node') ? require('react-modal-syaku').GroupModal : require('../GroupModal').default;
+
+if (process.env.SOURCE_TARGET === 'node') {
+  require('react-modal-syaku/dist/react-modal.css');
+}
 
 class ModalContainer extends React.Component {
   constructor(props) {
@@ -21,6 +24,8 @@ class ModalContainer extends React.Component {
 
     this.onOpen = this.onOpen.bind(this);
     this.onEvent = this.onEvent.bind(this);
+    this.onEvent2 = this.onEvent.bind(this);
+    this.onEvent3 = this.onEvent.bind(this);
 
     this.state = {
       eventState: '',
@@ -41,7 +46,14 @@ class ModalContainer extends React.Component {
   }
 
   onEvent(name, state) {
-    console.log(`${name} function event test`);
+    if (state) this.setState({ eventState: name });
+  }
+
+  onEvent2(name, state) {
+    if (state) this.setState({ eventState: name });
+  }
+
+  onEvent3(name, state) {
     if (state) this.setState({ eventState: name });
   }
 
@@ -51,6 +63,7 @@ class ModalContainer extends React.Component {
         <Modal
           isOpen={this.state.isOpenOn3}
           onRequestClose={() => this.onOpen('isOpenOn3')}
+          className="good"
         >
           <div>
             Modal isOpenOn3
@@ -122,9 +135,9 @@ class ModalContainer extends React.Component {
             isOpen={this.state.isOpenGroup2}
             width="300px"
             height="300px"
-            beforeOpen={() => { console.log('beforeOpen render', this.nodeEvent2); this.onEvent('beforeOpen', true); }}
-            afterOpen={() => { console.log('afterOpen render', this.nodeEvent2); this.onEvent('afterOpen', true); }}
-            doneClose={() => { console.log('doneClose render', this.nodeEvent2); this.onEvent('doneClose', true); }}
+            beforeOpen={() => { console.log('Group beforeOpen render', this.nodeEvent2); this.onEvent2('Group beforeOpen', true); }}
+            afterOpen={() => { console.log('Group afterOpen render', this.nodeEvent2); this.onEvent2('Group afterOpen', true); }}
+            doneClose={() => { console.log('Group doneClose render', this.nodeEvent2); this.onEvent2('Group doneClose', true); }}
           >
             <div ref={(node) => { this.nodeEvent2 = node; }}>
               Group Modal isOpenGroup2 {this.state.eventState}
@@ -140,23 +153,30 @@ class ModalContainer extends React.Component {
 
         <Modal
           isOpen={this.state.isOpenEvent}
+          isEscClose={false}
           width="500px"
           height="500px"
           onRequestClose={() => this.onOpen('isOpenEvent')}
           beforeOpen={() => { console.log('beforeOpen render', this.nodeEvent); this.onEvent('beforeOpen', true); }}
           afterOpen={() => { console.log('afterOpen render', this.nodeEvent); this.onEvent('afterOpen', true); }}
           doneClose={() => { console.log('doneClose render', this.nodeEvent); this.onEvent('doneClose', true); }}
+          style={{ color: 'red' }}
+          overlayStyle={{ background: 'red' }}
         >
           <div ref={(node) => { this.nodeEvent = node; }}>
-            Modal isOpenEvent {this.state.eventState}
+            Modal isOpenEvent {this.state.eventState}<br />
+            esc close off.
           </div>
         </Modal>
 
         <Modal
           isOpen={this.state.isOpenOn31}
           onRequestClose={() => this.onOpen('isOpenOn31')}
+          beforeOpen={() => { console.log('Open beforeOpen render', this.nodeEvent3); this.onEvent3('Open beforeOpen', true); }}
+          afterOpen={() => { console.log('Open afterOpen render', this.nodeEvent3); this.onEvent3('Open afterOpen', true); }}
+          doneClose={() => { console.log('Open doneClose render', this.nodeEvent3); this.onEvent3('Open doneClose', true); }}
         >
-          <div>
+          <div ref={(node) => { this.nodeEvent3 = node; }}>
             Modal isOpenOn31
             <button type="button" className="btn btn-default" onClick={() => { this.onOpen('isOpenOn2'); this.onOpen('isOpenOn21'); }}>
               Modal isOpenOn21

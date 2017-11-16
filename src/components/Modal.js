@@ -26,7 +26,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: '',
+  className: null,
   style: {},
   width: '50%',
   height: 'auto',
@@ -50,17 +50,17 @@ class Modal extends Component {
   }
 
   render() {
-    let center = this.props.center;
+    let isCenter = this.props.center;
     let style = { ...this.props.style, width: this.props.width, height: this.props.height };
 
     if (this.props.left !== null || this.props.top !== null) {
-      center = false;
+      isCenter = false;
       style = { ...style, left: this.props.left, top: this.props.top };
     }
 
     return (
       <div
-        className={`${this.props.className} ${s.container} ${center ? s.center : ''}`}
+        className={`${s.container} ${isCenter ? `${s.center} ` : ''}${this.props.className ? `${this.props.className}` : ''}`}
         style={style}
         role="button"
         tabIndex={0}
