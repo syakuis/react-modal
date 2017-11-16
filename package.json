@@ -1,6 +1,6 @@
 {
   "name": "react-modal-syaku",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "react modal",
   "author": "Syaku (http://syaku.tistory.com)",
   "license": "MIT",
@@ -56,8 +56,8 @@
     "p:remove": "yarn remove react-modal-syaku -D",
     "build:prod": "NODE_ENV='production' webpack -p --profile --colors --progress",
     "build:demo": "NODE_ENV='production' SOURCE_TARGET='node' webpack --config webpack.config.demo.js -p --profile --colors --progress",
-    "serv:dev": "NODE_ENV='development' SOURCE_TARGET='local' webpack-dev-server --config webpack.config.dev.js --colors --progress --profile",
-    "serv:demo": "NODE_ENV='development' SOURCE_TARGET='node' webpack-dev-server --config webpack.config.demo.js --colors --progress --profile",
+    "serv:dev": "NODE_ENV='development' SOURCE_TARGET='local' webpack-dev-server -d --config webpack.config.dev.js --colors --progress --profile",
+    "serv:demo": "NODE_ENV='development' SOURCE_TARGET='node' webpack-dev-server -d --config webpack.config.demo.js --colors --progress --profile",
     "stats:prod": "NODE_ENV='production' webpack --config webpack.config.stats.js -p --colors --progress --profile --json > stats.json"
   },
   "devDependencies": {
@@ -88,7 +88,7 @@
     "html-webpack-plugin": "^2.28.0",
     "react": ">=16.0.0",
     "react-dom": ">=16.0.0",
-    "react-modal-syaku": "./react-modal-syaku-v1.2.0.tgz",
+    "react-modal-syaku": "^1.2.2",
     "style-loader": "^0.19.0",
     "stylelint": "^8.2.0",
     "stylelint-config-standard": "^17.0.0",
