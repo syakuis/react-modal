@@ -101,6 +101,8 @@ import 'react-modal-syaku/dist/react-modal.css';
 </GroupModal>
 ```
 
+GroupModal 컴포넌트 자식은 오직 Modal 컴포넌트만 가질 수 있다.
+
 ## dev server start
 
 ```
