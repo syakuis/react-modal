@@ -1,7 +1,5 @@
 # React Modal
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/dBWe5x6v050/0.jpg)](https://youtu.be/dBWe5x6v050)
-
 > React 16 이상 버전만 지원합니다.  IE 11 이상만 지원합니다. 크롬, 사파리, 파이어폭스, IE 11 에서 테스트하였습니다.
 
 - 여러 개의 모달을 함께 혹은 개별적으로 제어할 수 있습니다.
@@ -10,6 +8,10 @@
 - 모달 상태에 따라 이벤트 트리거 (EventListener) 를 사용할 수 있습니다.
 - 모달을 중앙 혹은 원하는 좌표 위치에 배치할 수 있습니다.
 - esc 키를 이용하여 모달 닫을 수 있습니다.
+
+DEMO : http://syakuis.github.io/demo/react-modal
+
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/dBWe5x6v050/0.jpg)](https://youtu.be/dBWe5x6v050)
 
 ### 주의
 
