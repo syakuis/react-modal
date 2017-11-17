@@ -58,22 +58,6 @@ const modalSelect = (id) => {
   selectId = id;
 };
 
-// selectId 정보를 이용하여 모든 모달의 zIndex 를 갱신한다.
-const zIndexUpdate = (zIndex) => {
-  const modalNode = Array.from(reactModal.querySelectorAll('[data-modal]'));
-  const zIndexNew = zIndex === null ? 1 : zIndex + 1;
-
-  modalNode.forEach((ele) => {
-    const node = reactModal.querySelector(`[data-modal=${ele.dataset.modal}]`);
-    if (node) {
-      node.style.zIndex = zIndex;
-    }
-    if (selectId === ele.dataset.modal) {
-      node.style.zIndex = zIndexNew;
-    }
-  });
-};
-
 const propTypes = {
   children: PropTypes.node.isRequired,
   id: PropTypes.string,
@@ -153,7 +137,6 @@ class Modal extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     modalOpenTop(nextProps.isOpen, this.id);
-    zIndexUpdate(nextProps.zIndex);
 
     this.onEventBeforeOpen(nextProps);
     if (this.props.isOpen && !nextProps.isOpen) this.onEventDoneClose(nextProps);
@@ -182,13 +165,21 @@ class Modal extends React.Component {
     } else {
       this.doneCloseOnce = false;
     }
+
+    if (selectId === this.id) {
+      const zIndexNew = this.props.zIndex === null ? 1 : this.props.zIndex + 1;
+      this.ele.style.zIndex = zIndexNew;
+    } else {
+      this.ele.style.zIndex = this.props.zIndex;
+    }
   }
 
   componentWillUnmount() {
     reactModal.removeChild(this.ele);
   }
 
-  onModalSelect(id) {
+  onModalSelect(e, id) {
+    e.stopPropagation();
     if (typeof this.props.onModalSelect === 'function') {
       this.props.onModalSelect(id);
     }

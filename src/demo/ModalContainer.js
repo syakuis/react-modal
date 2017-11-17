@@ -27,6 +27,8 @@ class ModalContainer extends React.Component {
     this.onEvent2 = this.onEvent.bind(this);
     this.onEvent3 = this.onEvent.bind(this);
 
+    this.stateChangeTest = this.stateChangeTest.bind(this);
+
     this.state = {
       eventState: '',
       isOpen: false,
@@ -38,6 +40,7 @@ class ModalContainer extends React.Component {
       isOpenGroup: false,
       isOpenGroup2: false,
       isOpenEvent: false,
+      stateChangeTest: 0,
     };
   }
 
@@ -57,6 +60,10 @@ class ModalContainer extends React.Component {
     if (state) this.setState({ eventState: name });
   }
 
+  stateChangeTest() {
+    this.setState({ stateChangeTest: this.state.stateChangeTest += 1 });
+  }
+
   render() {
     return (
       <div>
@@ -72,6 +79,10 @@ class ModalContainer extends React.Component {
         <Modal
           isOpen={this.state.isOpenOn2}
           onRequestClose={() => this.onOpen('isOpenOn2')}
+          width="500px"
+          height="500px"
+          left={10}
+          top={10}
         >
           <div>
             Modal isOpenOn2
@@ -85,6 +96,9 @@ class ModalContainer extends React.Component {
           >
             <div>
               Modal isOpenOn21
+              <button type="button" className="btn btn-default" onClick={this.stateChangeTest}>
+                State Change Test {this.state.stateChangeTest}
+              </button>
             </div>
           </Modal>
         </Modal>

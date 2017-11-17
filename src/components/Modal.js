@@ -14,8 +14,8 @@ const propTypes = {
   style: PropTypes.shape(),
   width: PropTypes.string,
   height: PropTypes.string,
-  left: PropTypes.string,
-  top: PropTypes.string,
+  left: PropTypes.number,
+  top: PropTypes.number,
   center: PropTypes.bool,
 
   isCloseButton: PropTypes.bool.isRequired,
@@ -64,7 +64,7 @@ class Modal extends Component {
         style={style}
         role="button"
         tabIndex={0}
-        onClick={() => this.props.onModalSelect(this.props.id)}
+        onClick={e => this.props.onModalSelect(e, this.props.id)}
       >
         {
           this.props.isCloseButton ? <span className={s.close} role="button" tabIndex={0} onClick={this.onClose} /> : null
