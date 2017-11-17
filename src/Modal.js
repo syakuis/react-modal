@@ -169,12 +169,11 @@ class Modal extends React.Component {
     if (this.props.isEscClose) {
       window.removeEventListener('keydown', this.onEscClose);
       this.isEventListener = false;
-    }
 
-    if (this.props.isEscClose &&
-        this.props.isOpen && !this.isEventListener && selectId === this.id) {
-      window.addEventListener('keydown', this.onEscClose);
-      this.isEventListener = true;
+      if (this.props.isOpen && selectId === this.id) {
+        window.addEventListener('keydown', this.onEscClose);
+        this.isEventListener = true;
+      }
     }
 
     if (!this.props.isOpen) {

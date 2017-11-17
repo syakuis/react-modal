@@ -30,6 +30,18 @@ DEMO : http://syakuis.github.io/demo/react-modal
 
 위와 같이 `id=3`이 `id=1`에 속한 `id=2`를 바로 열 수 없습니다. `id=1`을 열고 `id=2`를 열 수 있습니다.
 
+```
+onRequestClose() {
+  // bad
+  this.setState({ isOpen: !this.state.isOpen });
+
+  // good
+  this.setState({ isOpen: false });
+}
+```
+
+`onRequestClose` 는 모달을 닫기 위한 함수입나다. 사용에 주의하세요.
+
 ## Install
 
 ```
@@ -58,10 +70,10 @@ import 'react-modal-syaku/dist/react-modal.css';
   left: null, // null 이 아니면 center 옵션이 무시된다.
   top: null, // null 이 아니면 center 옵션이 무시된다.
   center: true,
-  isCloseButton: true,
+  isCloseButton: true, // 내부 close 버튼을 표시한다.
   isEscClose: true,
   isOpen: false,
-  onRequestClose: null, // 모달을 닫을때 사용되는 함수
+  onRequestClose: null, // 모달을 닫을때 사용되는 함수. onRequestClose 에서 isOpen 이 false 가 되도록 해야한다.
 
   isOverlay: true, // 모달 배경 사용여부
   overlayClassName: null,
