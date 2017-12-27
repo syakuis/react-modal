@@ -6,9 +6,18 @@
 
 import ReactDOM from 'react-dom';
 import React from 'react';
-import ModalContainer from './ModalContainer';
+import { HashRouter as Router } from 'react-router-dom';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.css';
+
+import '_resources/demo.css';
+
+import Main from './containers/main';
 
 ReactDOM.render(
-  <ModalContainer />,
+  <Router>
+    <Main />
+  </Router>,
   document.getElementById('app'),
 );

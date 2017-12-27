@@ -12,10 +12,12 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   style: PropTypes.shape(),
-  width: PropTypes.string,
-  height: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   left: PropTypes.number,
   top: PropTypes.number,
+  right: PropTypes.number,
+  bottom: PropTypes.number,
   center: PropTypes.bool,
 
   isCloseButton: PropTypes.bool.isRequired,
@@ -32,10 +34,17 @@ const defaultProps = {
   height: 'auto',
   left: null,
   top: null,
+  right: null,
+  bottom: null,
   center: true,
 
   id: null,
   onModalSelect: null,
+};
+
+const setPosition = (value, position) => {
+  if (value === null) return {};
+  return { [position]: value };
 };
 
 class Modal extends Component {
@@ -53,9 +62,18 @@ class Modal extends Component {
     let isCenter = this.props.center;
     let style = { ...this.props.style, width: this.props.width, height: this.props.height };
 
-    if (this.props.left !== null || this.props.top !== null) {
+    const left = setPosition(this.props.left, 'left');
+    style = { ...style, ...left };
+    const top = setPosition(this.props.top, 'top');
+    style = { ...style, ...top };
+    const right = setPosition(this.props.right, 'right');
+    style = { ...style, ...right };
+    const bottom = setPosition(this.props.bottom, 'bottom');
+    style = { ...style, ...bottom };
+
+    if (this.props.left !== null || this.props.top !== null
+      || this.props.right !== null || this.props.bottom !== null) {
       isCenter = false;
-      style = { ...style, left: this.props.left, top: this.props.top };
     }
 
     return (
@@ -63,6 +81,7 @@ class Modal extends Component {
         className={`${s.container} ${isCenter ? `${s.center} ` : ''}${this.props.className ? `${this.props.className}` : ''}`}
         style={style}
         role="button"
+        id={this.props.id}
         tabIndex={0}
         onClick={e => this.props.onModalSelect(e, this.props.id)}
       >
