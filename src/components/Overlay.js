@@ -11,18 +11,24 @@ import s from '_resources/style.module.css';
 const propTypes = {
   overlayClassName: PropTypes.string,
   overlayStyle: PropTypes.shape({}),
+  zIndex: PropTypes.number,
 };
 
 const defaultProps = {
   overlayClassName: undefined,
   overlayStyle: {},
+  zIndex: null,
 };
 
 const Overlay = (props) => {
   const overlayClassName = props.overlayClassName ? `${s.overlay} ${props.overlayClassName}` : s.overlay;
+  const zIndex = props.zIndex ? { zIndex: props.zIndex } : {};
 
   return (
-    <div style={props.overlayStyle ? props.overlayStyle : {}} className={overlayClassName} />
+    <div
+      className={overlayClassName}
+      style={props.overlayStyle ? { ...props.overlayStyle, ...zIndex } : { ...zIndex }}
+    />
   );
 };
 

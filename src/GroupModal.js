@@ -6,10 +6,10 @@ import Overlay from '_components/Overlay';
 
 const doc = document;
 const docBody = doc.body;
-let reactModalOverlay = doc.getElementById('react-modal-overlay');
+let reactModalOverlay = doc.getElementById('react-modal');
 if (!reactModalOverlay) {
   reactModalOverlay = doc.createElement('div');
-  reactModalOverlay.setAttribute('id', 'react-modal-overlay');
+  reactModalOverlay.setAttribute('id', 'react-modal');
 
   docBody.insertBefore(
     reactModalOverlay,
@@ -107,28 +107,37 @@ class GroupModal extends React.Component {
 
   render() {
     const Children = React.Children.map(this.Children, (children) => {
+      if (!children.props) return children;
+      // console.log(children.props.componentName);
       // console.log(getName(children.type));
-      // if (getName(children.type) === 'Modal') {
-      const zIndex = children.props.id === this.state.selectId ?
-        this.zIndexTop() : this.props.zIndex;
-      return React.cloneElement(children, {
-        ...children.props,
-        zIndex,
-      });
-      // }
-      // return children;
+      const { componentName } = children.props;
+      if (componentName === 'Modal') {
+        const zIndex = children.props.id === this.state.selectId ?
+          this.zIndexTop() : this.props.zIndex;
+
+        return React.cloneElement(children, {
+          ...children.props,
+          zIndex,
+          isScrollbar: false,
+        });
+      }
+
+      return children;
     });
 
     return ReactDOM.createPortal(
-      [
-        this.props.isOverlay && this.state.overlay ?
-          <Overlay
-            overlayClassName={this.props.overlayClassName}
-            overlayStyle={this.props.overlayStyle}
-            key="reactGroupModalOverlay"
-          /> : null,
-        Children,
-      ],
+      <div>
+        {
+          this.props.isOverlay && this.state.overlay ?
+            <Overlay
+              overlayClassName={this.props.overlayClassName}
+              overlayStyle={this.props.overlayStyle}
+              key="reactGroupModalOverlay"
+              zIndex={this.props.zIndex}
+            /> : null
+        }
+        {Children}
+      </div>,
       this.ele,
     );
   }

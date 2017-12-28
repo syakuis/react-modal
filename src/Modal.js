@@ -116,6 +116,8 @@ const propTypes = {
   afterOpen: PropTypes.func,
   doneClose: PropTypes.func,
   isScrollbar: PropTypes.bool,
+
+  componentName: PropTypes.string,
 };
 
 const defaultProps = {
@@ -136,6 +138,8 @@ const defaultProps = {
   afterOpen: null,
   doneClose: null,
   isScrollbar: false,
+
+  componentName: 'Modal',
 };
 
 class Modal extends React.Component {
@@ -148,9 +152,11 @@ class Modal extends React.Component {
     this.ele.setAttribute('data-modal', this.id);
     this.ele.style.zIndex = props.zIndex;
     this.ele.style.position = 'absolute';
-    this.ele.style.display = 'none';
-    this.ele.style.width = '100%';
-    this.ele.style.height = '100%';
+    if (props.isScrollbar) {
+      this.ele.style.display = 'none';
+      this.ele.style.width = '100%';
+      this.ele.style.height = '100%';
+    }
 
     this.beforeOpenOnce = false;
     this.afterOpenOnce = false;
@@ -271,7 +277,10 @@ class Modal extends React.Component {
   }
 
   onOpen(isOpen) {
-    this.ele.style.display = isOpen ? '' : 'none';
+    // isScrollbar 를 생성하기 위한 전체사이즈
+    if (this.props.isScrollbar) {
+      this.ele.style.display = isOpen ? '' : 'none';
+    }
   }
 
   onModalSelect(e, id) {
