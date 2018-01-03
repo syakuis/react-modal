@@ -1,5 +1,5 @@
 .modal-overlay {
-  display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   flex-flow: row wrap;
@@ -10,6 +10,16 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, .6);
   overflow-y: auto;
+  -webkit-box-pack: flex-start;
+  -moz-box-pack: flex-start;
+  -ms-flex-pack: flex-start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-box-align: flex-start;
+  -moz-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
 }
 
 .modal-overlay-center {
@@ -29,7 +39,7 @@
 }
 
 .modal-wrapper {
-  position: absolute;
+  position: relative;
   background: #fff;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;

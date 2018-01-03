@@ -55,8 +55,6 @@ import 'react-modal-syaku/dist/react-modal.css';
   height: null,
   top: null, // null 이 아니면 center 옵션이 무시된다.
   left: null, // null 이 아니면 center 옵션이 무시된다.
-  right: null,
-  bottom: nunll,
   isCenter: true,
   isCloseButton: true, // 내부 close 버튼을 표시한다.
   isEscClose: true,
