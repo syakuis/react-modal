@@ -136,7 +136,7 @@ const defaultProps = {
 
   isOpen: false,
 
-  zIndex: null,
+  zIndex: 3000,
 
   overlayClassName: null,
   overlayStyle: null,
@@ -326,7 +326,7 @@ const withModal = (Component) => {
       return ReactDOM.createPortal(
         <Overlay
           id={this.overlayId}
-          zIndex={props.zIndex}
+          zIndex={this.props.zIndex}
           isCenter={this.isCenter}
           overlayClassName={overlayClassName}
           overlayStyle={overlayStyle}

@@ -13,8 +13,6 @@
 
 DEMO : http://syakuis.github.io/demo/react-modal
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/dBWe5x6v050/0.jpg)](https://youtu.be/dBWe5x6v050)
-
 ## Install
 
 ```
@@ -48,8 +46,11 @@ import 'react-modal-syaku/dist/react-modal.css';
   isOpen: false, // required
   onClose: null, // required 모달을 닫을때 사용되는 함수.
 
-  className: '',
-  style: {},
+  className: '', // .modal-wrapper node 에 class 를 추가한다.
+  style: {}, // .modal-wrapper node 에 style 를 추가한다.
+  containerClassName: null, // .modal-container node 에 class 를 추가한다.
+  containerStyle: {}, // .modal-container node 에 style 를 추가한다.
+
   width: '50%',
   height: null,
   top: null, // null 이 아니면 center 옵션이 무시된다.

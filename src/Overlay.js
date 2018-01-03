@@ -16,19 +16,17 @@ const defaultProps = {
   zIndex: null,
 };
 
-const append = (result, object) => (object ? { ...result, ...object } : result);
-
 class Overlay extends React.Component {
   constructor(props) {
     super(props);
 
     this.className = props.isCenter ?
-      `modal-overlay modal-overlay-center modal-overlay-alignCenter ${props.overlayClassName}` :
-      `modal-overlay ${props.overlayClassName}`;
+      'modal-overlay modal-overlay-center modal-overlay-alignCenter' :
+      'modal-overlay';
+    this.className = props.overlayClassName ? `${this.className} ${props.overlayClassName}` : this.className;
 
-    this.style = {};
-    this.syle = append(this.style, props.zIndex);
-    this.syle = append(this.style, props.overlayStyle);
+    this.style = props.zIndex ? { zIndex: props.zIndex } : {};
+    this.style = props.overlayStyle ? { ...this.style, ...props.overlayStyle } : this.style;
   }
 
   render() {
