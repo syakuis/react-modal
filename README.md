@@ -23,7 +23,7 @@ or
 $ yarn add react-modal-syaku
 
 
-import Modal, { GroupModal } from 'react-modal-syaku';
+import Modal from 'react-modal-syaku';
 import 'react-modal-syaku/dist/react-modal.css';
 ```
 
