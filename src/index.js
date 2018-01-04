@@ -6,6 +6,5 @@
  */
 import 'core-js/fn/array/from';
 import 'core-js/fn/array/for-each';
-import Modal from './Modal';
 
-export default Modal;
+module.exports = require('./Modal').default;

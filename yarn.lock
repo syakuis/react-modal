@@ -4586,9 +4586,9 @@ react-dom@>=16.0.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-modal-syaku@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/react-modal-syaku/-/react-modal-syaku-1.3.4.tgz#e188aa7be74a710dd64e48938f05ad7e61a75c5c"
+react-modal-syaku@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/react-modal-syaku/-/react-modal-syaku-1.3.5.tgz#52076e21fcf59bb7dc6b07d5ee13b6c469be4c17"
   dependencies:
     core-js "^2.5.1"
     prop-types "^15.6.0"

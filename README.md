@@ -13,6 +13,8 @@
 
 DEMO : http://syakuis.github.io/demo/react-modal
 
+jsbin : http://jsbin.com/jenudi/edit?html,js,output
+
 ## Install
 
 ```
@@ -97,7 +99,7 @@ onClose() {
 }
 ```
 
-`onRequestClose` 는 모달을 닫기 위한 함수입나다. 사용에 주의하세요.
+`onClose` 는 모달을 닫기 위한 함수입나다. 사용에 주의하세요.
 
 ## dev server start
 
