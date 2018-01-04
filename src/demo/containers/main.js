@@ -1,0 +1,44 @@
+import React from 'react';
+import { Route, Link } from 'react-router-dom';
+import Basic from './basic';
+import Multiple from './multiple';
+import Trigger from './trigger';
+
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <h1>React Modal Demo</h1>
+        <hr />
+        <div className="row">
+          <div className="col-xs-3">
+            <ul className="nav nav-pills nav-stacked">
+              <li role="presentation">
+                <Link to="/" replace>Basic</Link>
+              </li>
+              <li role="presentation">
+                <Link to="/multiple" replace>Multiple</Link>
+              </li>
+              <li role="presentation">
+                <Link to="/trigger" replace>Trigger event</Link>
+              </li>
+            </ul>
+          </div>
+          <div className="col-xs-9">
+            <Route exact path="/" component={Basic} />
+            <Route path="/multiple" component={Multiple} />
+            <Route path="/trigger" component={Trigger} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default Main;
