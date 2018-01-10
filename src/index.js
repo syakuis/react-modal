@@ -7,4 +7,13 @@
 import 'core-js/fn/array/from';
 import 'core-js/fn/array/for-each';
 
-module.exports = require('./Modal').default;
+const {
+  default: Modal, createId, open, close,
+} = require('./Modal');
+
+module.exports = {
+  Modal,
+  createId,
+  open,
+  close,
+};

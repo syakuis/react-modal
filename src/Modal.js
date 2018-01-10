@@ -6,8 +6,8 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import withModal from './withModal';
+import { syncModal, createId } from './syncModal';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -104,4 +104,7 @@ class Modal extends Component {
 Modal.propTypes = propTypes;
 Modal.defaultProps = defaultProps;
 
+const { open, close } = syncModal;
+
 export default withModal(Modal);
+export { createId, open, close };

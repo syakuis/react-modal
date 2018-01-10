@@ -1,8 +1,10 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
+import DevTools from 'mobx-react-devtools';
 import Basic from './basic';
 import Multiple from './multiple';
 import Trigger from './trigger';
+import AlertConfirm from './confirm';
 
 class Main extends React.Component {
   constructor(props) {
@@ -28,14 +30,19 @@ class Main extends React.Component {
               <li role="presentation">
                 <Link to="/trigger" replace>Trigger event</Link>
               </li>
+              <li role="presentation">
+                <Link to="/confirm" replace>Confirm</Link>
+              </li>
             </ul>
           </div>
           <div className="col-xs-9">
             <Route exact path="/" component={Basic} />
             <Route path="/multiple" component={Multiple} />
             <Route path="/trigger" component={Trigger} />
+            <Route path="/confirm" component={AlertConfirm} />
           </div>
         </div>
+        {process.env.SOURCE_TARGET !== 'node' ? <DevTools /> : null}
       </div>
     );
   }

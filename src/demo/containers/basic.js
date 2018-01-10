@@ -1,14 +1,11 @@
 import React from 'react';
-import Modal from '../Modal';
+import { Modal, createId, open, close } from '../Modal';
 
 class Basic extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onOpen = this.onOpen.bind(this);
-
-    this.state = {
-    };
+    this.id = createId();
   }
 
   onOpen(name) {
@@ -23,18 +20,21 @@ class Basic extends React.Component {
     return (
       <div>
         <h3># basic</h3>
-        <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpen')}>Open</button>
+        <button type="button" className="btn btn-default" onClick={() => { open(this.id); }}>Open</button>
         <p />
         <pre>
           {`
-          isOpen={this.state.isOpen}
-          onClose={() => this.onClose('isOpen')}
+            <button type="button" className="btn btn-default" onClick={() => { open(this.id); }}>Open</button>
+            <Modal
+              id={this.id}
+              isOpen={false}
+            >
           `}
         </pre>
 
         <Modal
-          isOpen={this.state.isOpen}
-          onClose={() => this.onClose('isOpen')}
+          id={this.id}
+          isOpen={false}
         >
           <div>
             esc 키로 닫을 수 있다.
@@ -42,10 +42,11 @@ class Basic extends React.Component {
         </Modal>
         <hr />
         <h3># inside scrollbar : modal container scrollbar</h3>
-        <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpenScrollbar')}>Open</button>
+        <button type="button" className="btn btn-default" onClick={() => open('isOpenScrollbar')}>Open</button>
         <p />
         <pre>
           {`
+            id="isOpenScrollbar"
             width={500}
             height={500}
             containerStyle={{
@@ -56,8 +57,7 @@ class Basic extends React.Component {
         </pre>
 
         <Modal
-          isOpen={this.state.isOpenScrollbar}
-          onClose={() => this.onClose('isOpenScrollbar')}
+          id="isOpenScrollbar"
           width={500}
           height={500}
           containerStyle={{
@@ -71,36 +71,33 @@ class Basic extends React.Component {
         </Modal>
         <hr />
         <h3># button close, esc disable</h3>
-        <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpenButtonClose')}>Open</button>
+        <button type="button" className="btn btn-default" onClick={() => open('isOpenButtonClose')}>Open</button>
         <p />
         <pre>
           {`
-          isOpen={this.state.isOpenButtonClose}
-          onClose={() => this.onClose('isOpenButtonClose')}
+          id="isOpenButtonClose"
           isEscClose={false}
           isCloseButton={false}
           `}
         </pre>
 
         <Modal
-          isOpen={this.state.isOpenButtonClose}
-          onClose={() => this.onClose('isOpenButtonClose')}
+          id="isOpenButtonClose"
           isEscClose={false}
           isCloseButton={false}
         >
           <div>
             esc 키로 닫을 수 없다.
-            <button type="button" className="btn btn-danger" onClick={() => this.onClose('isOpenButtonClose')}>Close</button>
+            <button type="button" className="btn btn-danger" onClick={() => close('isOpenButtonClose')}>Close</button>
           </div>
         </Modal>
         <hr />
         <h3># style modify</h3>
-        <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpen2')}>Open</button>
+        <button type="button" className="btn btn-default" onClick={() => open('isOpen2')}>Open</button>
         <p />
         <pre>
           {`
-          isOpen={this.state.isOpen2}
-          onClose={() => this.onClose('isOpen2')}
+          id="isOpen2"
           className="fontSize-20"
           style={{ color: '#fff', background: 'gray' }}
           width={500}
@@ -109,8 +106,7 @@ class Basic extends React.Component {
         </pre>
 
         <Modal
-          isOpen={this.state.isOpen2}
-          onClose={() => this.onClose('isOpen2')}
+          id="isOpen2"
           className="fontSize-20"
           style={{ color: '#fff', background: 'gray' }}
           width={500}
@@ -122,21 +118,50 @@ class Basic extends React.Component {
           </div>
         </Modal>
         <hr />
-        <h3># no center</h3>
-        <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpen3')}>Open</button>
+        <h3># modal container style modify</h3>
+        <button type="button" className="btn btn-default" onClick={() => open('isOpen21')}>Open</button>
         <p />
         <pre>
           {`
-          isOpen={this.state.isOpen3}
-          onClose={() => this.onClose('isOpen3')}
+          id="isOpen21"
+          containerStyle={{ padding: 0 }}
+          width={500}
+          `}
+        </pre>
+
+        <Modal
+          id="isOpen21"
+          containerStyle={{ padding: 0 }}
+          width={500}
+        >
+          <div className="panel panel-default" style={{ marginBottom: 0 }}>
+            <div className="panel-heading">Panel heading without title</div>
+            <div className="panel-body">
+              Panel content<br />
+              Panel content<br />
+              Panel content<br />
+              Panel content<br />
+              Panel content<br />
+              Panel content<br />
+              Panel content<br />
+            </div>
+          </div>
+        </Modal>
+        <hr />
+        <h3># no center</h3>
+        <button type="button" className="btn btn-default" onClick={() => open('isOpen3')}>Open</button>
+        <p />
+        <pre>
+          {`
+          id="isOpen3"
           isCenter={false}
+          height={500}
           style={{ margin: 10 }}
           `}
         </pre>
 
         <Modal
-          isOpen={this.state.isOpen3}
-          onClose={() => this.onClose('isOpen3')}
+          id="isOpen3"
           isCenter={false}
           height={500}
           style={{ margin: 10 }}

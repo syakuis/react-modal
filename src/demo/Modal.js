@@ -1,8 +1,19 @@
 /* eslint global-require: "off" */
-const Modal = (process.env.SOURCE_TARGET === 'node') ? require('react-modal-syaku') : require('../Modal').default;
+const ModalFactory = (process.env.SOURCE_TARGET === 'node') ? require('react-modal-syaku') : require('../Modal');
 
 if (process.env.SOURCE_TARGET === 'node') {
   require('react-modal-syaku/dist/react-modal.css');
 }
 
-export default Modal;
+const {
+  createId, open, close,
+} = ModalFactory;
+
+const Modal = (process.env.SOURCE_TARGET === 'node') ? ModalFactory.Modal : ModalFactory.default;
+
+module.exports = {
+  Modal,
+  createId,
+  open,
+  close,
+};

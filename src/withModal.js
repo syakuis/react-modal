@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react';
 import shortid from 'shortid';
-
 import '_resources/modal.css';
+import { syncModal } from './syncModal';
 
 import Overlay from './Overlay';
 
@@ -59,37 +60,6 @@ const getBrowser = () => {
     result.text = 'safari';
   }
   return result;
-};
-
-let currentModal = null;
-const modalPark = [];
-
-const setCurrentModal = () => {
-  const firstIndex = 0;
-  if (modalPark.lenght === firstIndex) {
-    currentModal = null;
-  } else {
-    currentModal = modalPark[firstIndex];
-  }
-};
-
-const modalOpen = (isOpen, id) => {
-  if (!isOpen) return;
-  if (modalPark.indexOf(id) === -1) {
-    modalPark.unshift(id);
-  }
-
-  setCurrentModal();
-};
-
-const modalClose = (isOpen, id) => {
-  if (isOpen) return;
-  const index = modalPark.indexOf(id);
-  if (index > -1) {
-    modalPark.splice(index, 1);
-  }
-
-  setCurrentModal();
 };
 
 const thisBrowser = getBrowser();
@@ -157,7 +127,7 @@ const scrollbarWidth = getScrollBarWidth();
 const scrollbarHidden = () => {
   const { body } = doc;
 
-  if (modalPark.length > 0) {
+  if (syncModal.modal.length > 0) {
     body.style.overflow = 'hidden';
     if (!thisBrowser.msie) body.style.paddingRight = `${scrollbarWidth}px`;
   } else {
@@ -182,7 +152,7 @@ const propTypes = {
   doneClose: PropTypes.func,
 
   isOpen: PropTypes.bool,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
 
   zIndex: PropTypes.number,
 
@@ -207,6 +177,7 @@ const defaultProps = {
   doneClose: null,
 
   isOpen: false,
+  onClose: null,
 
   zIndex: 3000,
 
@@ -220,7 +191,15 @@ const defaultProps = {
 
 // 데이터 처리는 will 에서 처리된 데이터를 활용하여 판단하는 건 did 에서 이루어 져야한다.
 const withModal = (Component) => {
-  class Modal extends React.Component {
+  const Modal = observer(class Modal extends React.Component {
+    static get defaultProps() {
+      return defaultProps;
+    }
+
+    static get propTypes() {
+      return propTypes;
+    }
+
     constructor(props) {
       super(props);
 
@@ -245,73 +224,62 @@ const withModal = (Component) => {
       this.isKeydownEventListener = false;
       this.isResizeEventListener = false;
 
+      this.onOpen = this.onOpen.bind(this);
       this.onRequestClose = this.onRequestClose.bind(this);
       this.onEscClose = this.onEscClose.bind(this);
       this.onResizeEventListener = this.onResizeEventListener.bind(this);
 
-      this.state = {
-        isOpen: props.isOpen,
-      };
+      this.isOpen = syncModal.isOpen(this.id);
     }
 
     componentWillMount() {
-      modalOpen(this.props.isOpen, this.id);
-      modalClose(this.props.isOpen, this.id);
-
-      this.onEventBeforeOpen(this.props);
+      if (this.props.isOpen) {
+        this.onOpen();
+        this.isOpen = syncModal.isOpen(this.id);
+      }
+      this.onEventBeforeOpen();
     }
 
     componentDidMount() {
-      if (this.state.isOpen) reactModal.appendChild(this.ele);
+      if (this.isOpen) reactModal.appendChild(this.ele);
 
-      this.onEventAfterOpen(this.props);
+      this.onEventAfterOpen();
 
       this.isScrollBarDisable = isScrollBarDisable();
       if (!this.isScrollBarDisable) scrollbarHidden();
 
       if (this.props.isEscClose &&
-          this.props.isOpen && !this.isKeydownEventListener && currentModal === this.id) {
+          this.isOpen && !this.isKeydownEventListener && syncModal.current === this.id) {
         window.addEventListener('keydown', this.onEscClose);
         this.isKeydownEventListener = true;
       }
 
-      if (!this.isResizeEventListener && currentModal === this.id) {
+      if (!this.isResizeEventListener && syncModal.current === this.id) {
         this.onResizeEventListener();
         window.addEventListener('resize', this.onResizeEventListener);
         this.isResizeEventListener = true;
       }
     }
 
-    componentWillReceiveProps(nextProps) {
-      this.setState({ isOpen: nextProps.isOpen });
+    componentWillUpdate() {
+      this.isOpen = syncModal.isOpen(this.id);
 
-      this.onEventBeforeOpen(nextProps);
-      if (this.props.isOpen && !nextProps.isOpen) this.onEventDoneClose(nextProps);
-    }
-
-    // shouldComponentUpdate() {
-    //   console.log('------> shouldComponentUpdate', this.id);
-    //   // this.current = nextProps.isOpen && !this.props.isOpen;
-    //   return true;
-    // }
-
-    componentWillUpdate(nextProps) {
-      modalOpen(nextProps.isOpen, this.id);
-      modalClose(nextProps.isOpen, this.id);
+      this.onEventBeforeOpen();
+      if (!this.isOpen) this.onEventDoneClose();
     }
 
     componentDidUpdate() {
       const ele = doc.getElementById(this.id);
-      if (ele && !this.state.isOpen) reactModal.removeChild(this.ele);
-      if (!ele && this.state.isOpen) reactModal.appendChild(this.ele);
+      if (ele && !this.isOpen) reactModal.removeChild(this.ele);
+      if (!ele && this.isOpen) reactModal.appendChild(this.ele);
 
-      this.onEventAfterOpen(this.props);
+      this.onEventAfterOpen();
 
       if (this.props.isEscClose) {
         window.removeEventListener('keydown', this.onEscClose);
         this.isKeydownEventListener = false;
 
-        if (this.props.isOpen && currentModal === this.id) {
+        if (this.isOpen && syncModal.current === this.id) {
           window.addEventListener('keydown', this.onEscClose);
           this.isKeydownEventListener = true;
         }
@@ -321,14 +289,14 @@ const withModal = (Component) => {
       window.removeEventListener('resize', this.onResizeEventListener);
       this.isResizeEventListener = false;
 
-      if (currentModal === this.id) {
+      if (syncModal.current === this.id) {
         window.addEventListener('resize', this.onResizeEventListener);
         this.isResizeEventListener = true;
       }
 
       if (!this.isScrollBarDisable) scrollbarHidden();
 
-      if (!this.props.isOpen) {
+      if (!this.isOpen) {
         this.beforeOpenOnce = false;
         this.afterOpenOnce = false;
       } else {
@@ -344,7 +312,12 @@ const withModal = (Component) => {
     }
 
     onRequestClose() {
-      this.props.onClose();
+      if (typeof this.props.onClose === 'function') {
+        this.props.onClose(this.id);
+      } else {
+        syncModal.close(this.id);
+      }
+      this.isOpen = false;
     }
 
     onEscClose(e) {
@@ -353,23 +326,23 @@ const withModal = (Component) => {
       }
     }
 
-    onEventBeforeOpen(props) {
-      if (props.isOpen && !this.beforeOpenOnce && typeof props.beforeOpen === 'function') {
-        props.beforeOpen();
+    onEventBeforeOpen() {
+      if (this.isOpen && !this.beforeOpenOnce && typeof this.props.beforeOpen === 'function') {
+        this.props.beforeOpen();
         this.beforeOpenOnce = true;
       }
     }
 
-    onEventAfterOpen(props) {
-      if (props.isOpen && !this.afterOpenOnce && typeof props.afterOpen === 'function') {
-        props.afterOpen();
+    onEventAfterOpen() {
+      if (this.isOpen && !this.afterOpenOnce && typeof this.props.afterOpen === 'function') {
+        this.props.afterOpen();
         this.afterOpenOnce = true;
       }
     }
 
-    onEventDoneClose(props) {
-      if (!this.doneCloseOnce && typeof props.doneClose === 'function') {
-        props.doneClose();
+    onEventDoneClose() {
+      if (!this.doneCloseOnce && typeof this.props.doneClose === 'function') {
+        this.props.doneClose();
         this.doneCloseOnce = true;
       }
     }
@@ -390,8 +363,12 @@ const withModal = (Component) => {
       }
     }
 
+    onOpen() {
+      syncModal.open(this.id);
+    }
+
     render() {
-      if (!this.state.isOpen) return null;
+      if (!syncModal.isOpen(this.id)) return null;
       const {
         isCenter, overlayClassName, overlayStyle, ...props
       } = this.props;
@@ -412,10 +389,7 @@ const withModal = (Component) => {
         this.ele,
       );
     }
-  }
-
-  Modal.propTypes = propTypes;
-  Modal.defaultProps = defaultProps;
+  });
 
   return Modal;
 };

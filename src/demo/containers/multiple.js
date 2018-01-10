@@ -1,26 +1,13 @@
 
 import React from 'react';
-import Modal from '../Modal';
+import { Modal, open } from '../Modal';
 
 class Multiple extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onOpen = this.onOpen.bind(this);
-
     this.state = {
-      isOpen: true,
-      isOpen2: true,
-      isOpen3: false,
     };
-  }
-
-  onOpen(name) {
-    this.setState({ [name]: true });
-  }
-
-  onClose(name) {
-    this.setState({ [name]: false });
   }
 
   render() {
@@ -31,46 +18,44 @@ class Multiple extends React.Component {
           여러 모달이 활성화된 순서대로 열고 닫을 수 있다. 모달 source code 순서와 상관없다.
 
         </div>
-        <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpen')}>Open #1</button>&nbsp;
-        <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpen2')}>Open #2</button>
+        <button type="button" className="btn btn-default" onClick={() => open('isOpen')}>Open #1</button>&nbsp;
+        <button type="button" className="btn btn-default" onClick={() => open('isOpen2')}>Open #2</button>
         <p />
         <pre>
           {`
-          <Modal
-            onClose={() => this.onClose('isOpen3')}
-            isOpen={this.state.isOpen3}
-            width="500px"
-            height="500px"
-            style={{ backgroundColor: 'gray', color: '#fff' }}
-            isCenter={false}
-          >
-            Child 활성화
-          </Modal>
+            <Modal
+              id="isOpen3"
+              width="500px"
+              height="500px"
+              style={{ backgroundColor: 'gray', color: '#fff' }}
+              isCenter={false}
+            >
+              Child 활성화
+            </Modal>
 
-          <Modal
-            onClose={() => this.onClose('isOpen')}
-            isOpen={this.state.isOpen}
-          >
-            Open #1 활성화
-            <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpen3')}>
-              Child Open
-            </button>
-          </Modal>
+            <Modal
+              id="isOpen"
+              isOpen
+            >
+              Open #1 활성화
+              <button type="button" className="btn btn-default" onClick={() => open('isOpen3')}>
+                Child Open
+              </button>
+            </Modal>
 
-          <Modal
-            onClose={() => this.onClose('isOpen2')}
-            isOpen={this.state.isOpen2}
-            width="300px"
-            height="300px"
-          >
-            Open #2 활성화
-          </Modal>
+            <Modal
+              id="isOpen2"
+              isOpen
+              width="300px"
+              height="300px"
+            >
+              Open #2 활성화
+            </Modal>
           `}
         </pre>
 
         <Modal
-          onClose={() => this.onClose('isOpen3')}
-          isOpen={this.state.isOpen3}
+          id="isOpen3"
           width="500px"
           height="500px"
           style={{ backgroundColor: 'gray', color: '#fff' }}
@@ -80,18 +65,18 @@ class Multiple extends React.Component {
         </Modal>
 
         <Modal
-          onClose={() => this.onClose('isOpen')}
-          isOpen={this.state.isOpen}
+          id="isOpen"
+          isOpen
         >
           Open #1 활성화
-          <button type="button" className="btn btn-default" onClick={() => this.onOpen('isOpen3')}>
+          <button type="button" className="btn btn-default" onClick={() => open('isOpen3')}>
             Child Open
           </button>
         </Modal>
 
         <Modal
-          onClose={() => this.onClose('isOpen2')}
-          isOpen={this.state.isOpen2}
+          id="isOpen2"
+          isOpen
           width="300px"
           height="300px"
         >
