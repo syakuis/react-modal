@@ -12,7 +12,7 @@
 
 DEMO : http://syakuis.github.io/demo/react-modal
 
-jsbin : http://jsbin.com/jenudi/edit?html,js,output
+[![Edit react modal demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/l943kvr237)
 
 ## Install
 
