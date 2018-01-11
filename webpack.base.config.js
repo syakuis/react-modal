@@ -23,7 +23,7 @@ const base = (args) => {
       publicPath,
       filename: `${filename}.js`,
       libraryTarget: 'umd',
-      library: 'Modal',
+      library: 'ReactModal',
     },
 
     plugins: [
@@ -84,24 +84,24 @@ const base = (args) => {
             ],
           }),
         },
-        {
-          test: /\.(png|jpg|gif)$/,
-          use: `file-loader?name=[name]-[hash].[ext]&publicPath=${publicPath}&outputPath=images/`,
-        },
+        // {
+        //   test: /\.(png|jpg|gif)$/,
+        //   use: `file-loader?name=[name]-[hash].[ext]&publicPath=${publicPath}&outputPath=images/`,
+        // },
         {
           test: /\.(eot|svg|ttf|woff|woff2)$/,
           use: `file-loader?name=[name]-[hash].[ext]&publicPath=${publicPath}&outputPath=fonts/`,
         },
         // 폰트를 제대로 불러오지 못함.
-        // {
-        //   test: /\.(png|jpg|gif|eot|svg|ttf|woff|woff2)$/i,
-        //   use: {
-        //     loader: 'url-loader',
-        //     options: {
-        //       limit: 10000, // 10kb
-        //     },
-        //   },
-        // },
+        {
+          test: /\.(png)$/i,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 10000, // 10kb
+            },
+          },
+        },
         {
           test: /\.js$/,
           include: path.resolve(__dirname, src),

@@ -4,7 +4,7 @@ import DevTools from 'mobx-react-devtools';
 import Basic from './basic';
 import Multiple from './multiple';
 import Trigger from './trigger';
-import AlertConfirm from './confirm';
+import ConfirmExample from './confirm';
 
 class Main extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class Main extends React.Component {
             <Route exact path="/" component={Basic} />
             <Route path="/multiple" component={Multiple} />
             <Route path="/trigger" component={Trigger} />
-            <Route path="/confirm" component={AlertConfirm} />
+            <Route path="/confirm" component={ConfirmExample} />
           </div>
         </div>
         {process.env.SOURCE_TARGET !== 'node' ? <DevTools /> : null}

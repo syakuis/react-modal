@@ -74,6 +74,10 @@ class Modal extends Component {
     }
 
     this.style = style;
+
+    this.closeButton = props.isCloseButton ? (
+      <span className="modal-close" role="button" tabIndex={-1} onClick={this.onClose} />
+    ) : null;
   }
 
   onClose() {
@@ -92,7 +96,7 @@ class Modal extends Component {
           style={this.props.containerStyle ? this.props.containerStyle : {}}
         >
           {
-            this.props.isCloseButton ? <span className="modal-close" role="button" tabIndex={0} onClick={this.onClose} /> : null
+            this.closeButton
           }
           {this.props.children}
         </div>
