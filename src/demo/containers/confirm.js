@@ -15,8 +15,8 @@ class ConfirmExample extends React.Component {
   onSave() {
     Confirm(
       '삭제하시겠습니까?',
-      () => { console.log('확인'); this.setState({ save: 'ok' }); },
-      () => { console.log('취소'); },
+      () => { this.setState({ save: 'ok' }); },
+      () => { this.setState({ save: 'no' }); },
     );
 
     Confirm(
@@ -29,7 +29,7 @@ class ConfirmExample extends React.Component {
   render() {
     return (
       <div>
-        <h3># refs 를 이용한 confirm 호출</h3>
+        <h3># Confirm</h3>
         <button type="button" className="btn btn-default" onClick={() => this.onSave('isOpen')}>저장</button>
         <p />
         {this.state.save}
