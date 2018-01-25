@@ -21,7 +21,7 @@ const syncModal = observable({
       }
       syncModal.modal.replace(modal);
     }
-    console.log('open: ', syncModal.modal.slice());
+    // console.log('open: ', syncModal.modal.slice());
   }),
   close: action('react-modal close', (id) => {
     const modal = syncModal.modal.slice();
@@ -30,7 +30,7 @@ const syncModal = observable({
       modal.splice(index, 1);
       syncModal.modal.replace(modal);
     }
-    console.log('open: ', syncModal.modal.slice());
+    // console.log('open: ', syncModal.modal.slice());
   }),
 });
 

@@ -22,6 +22,9 @@ class Main extends React.Component {
           <div className="col-xs-3">
             <ul className="nav nav-pills nav-stacked">
               <li role="presentation">
+                <a href="https://github.com/syakuis/react-modal"><i className="fa fa-github" aria-hidden="true" /> Github</a>
+              </li>
+              <li role="presentation">
                 <Link to="/" replace>Basic</Link>
               </li>
               <li role="presentation">
