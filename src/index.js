@@ -8,7 +8,7 @@ import 'core-js/fn/array/from';
 import 'core-js/fn/array/for-each';
 
 const {
-  default: Modal, createId, open, close,
+  default: Modal, createId, open, close, setDefaultProps, getDefaultProps,
 } = require('./Modal');
 
 module.exports = {
@@ -16,4 +16,6 @@ module.exports = {
   createId,
   open,
   close,
+  setDefaultProps,
+  getDefaultProps,
 };

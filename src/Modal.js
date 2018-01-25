@@ -5,60 +5,64 @@
  * @since: 2017. 8. 31.
  */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import withModal from './withModal';
 import { syncModal, createId } from './syncModal';
+import { defaultPropTypes, setDefaultProps, getDefaultProps } from './properties';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
-  id: PropTypes.string.isRequired,
-  zIndex: PropTypes.number,
+  children: defaultPropTypes.children.isRequired,
+  id: defaultPropTypes.id.isRequired,
+  zIndex: defaultPropTypes.zIndex,
 
-  onRequestClose: PropTypes.func.isRequired,
-  isCloseButton: PropTypes.bool.isRequired,
+  onRequestClose: defaultPropTypes.onRequestClose.isRequired,
+  isCloseButton: defaultPropTypes.isCloseButton.isRequired,
 
-  className: PropTypes.string,
-  style: PropTypes.shape(),
-  containerClassName: PropTypes.string,
-  containerStyle: PropTypes.shape(),
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  className: defaultPropTypes.className,
+  style: defaultPropTypes.style,
+  containerClassName: defaultPropTypes.containerClassName,
+  containerStyle: defaultPropTypes.containerStyle,
+  width: defaultPropTypes.width,
+  height: defaultPropTypes.height,
 
-  left: PropTypes.number,
-  top: PropTypes.number,
-  right: PropTypes.number,
-  bottom: PropTypes.number,
-};
-
-const defaultProps = {
-  zIndex: null,
-
-  className: null,
-  style: {},
-  width: '50%',
-  height: null,
-
-  containerClassName: null,
-  containerStyle: {},
-
-  left: null,
-  top: null,
-  right: null,
-  bottom: null,
+  left: defaultPropTypes.left,
+  top: defaultPropTypes.top,
+  right: defaultPropTypes.right,
+  bottom: defaultPropTypes.bottom,
 };
 
 const setPosition = (value, position) => {
-  if (value === null) return {};
+  if (!value) return {};
   return { [position]: value };
 };
 
 class Modal extends Component {
+  static get defaultProps() {
+    const defaultProps = getDefaultProps();
+    return {
+      zIndex: defaultProps.zIndex,
+      className: defaultProps.className,
+      style: defaultProps.style,
+      width: defaultProps.width,
+      height: defaultProps.height,
+      containerClassName: defaultProps.containerClassName,
+      containerStyle: defaultProps.containerStyle,
+      left: defaultProps.left,
+      top: defaultProps.top,
+      right: defaultProps.right,
+      bottom: defaultProps.bottom,
+    };
+  }
+
   constructor(props) {
     super(props);
 
-    this.onClose = this.onClose.bind(this);
-
-    let style = { ...props.style, width: props.width, height: props.height };
+    let style = Object.assign({}, props.style);
+    if (props.width && (props.width > 0 || props.width !== '')) {
+      style = { ...style, width: props.width };
+    }
+    if (props.height && (props.height > 0 || props.height !== '')) {
+      style = { ...style, height: props.height };
+    }
 
     const left = setPosition(props.left, 'left');
     style = { ...style, ...left };
@@ -76,12 +80,8 @@ class Modal extends Component {
     this.style = style;
 
     this.closeButton = props.isCloseButton ? (
-      <span className="modal-close" role="button" tabIndex={-1} onClick={this.onClose} />
+      <span className="modal-close" role="button" tabIndex="0" onClick={() => { this.props.onRequestClose(); }} />
     ) : null;
-  }
-
-  onClose() {
-    this.props.onRequestClose();
   }
 
   render() {
@@ -90,6 +90,9 @@ class Modal extends Component {
         id={this.props.id}
         className={`modal-wrapper${this.props.className ? ` ${this.props.className}` : ''}`}
         style={this.style}
+        role="button"
+        tabIndex="0"
+        onClick={(e) => { e.stopPropagation(); }}
       >
         <div
           className={`modal-container${this.props.containerClassName ? ` ${this.props.containerClassName}` : ''}`}
@@ -106,9 +109,8 @@ class Modal extends Component {
 }
 
 Modal.propTypes = propTypes;
-Modal.defaultProps = defaultProps;
 
 const { open, close } = syncModal;
 
 export default withModal(Modal);
-export { createId, open, close };
+export { createId, open, close, setDefaultProps, getDefaultProps };

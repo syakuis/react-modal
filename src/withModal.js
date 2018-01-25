@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import shortid from 'shortid';
 import '_resources/modal.css';
 import { syncModal } from './syncModal';
-
+import { defaultPropTypes, getDefaultProps } from './properties';
+import { isScrollBarDisable, scrollbarHidden } from './utils';
 import Overlay from './Overlay';
 
 const doc = document;
@@ -25,175 +25,57 @@ if (!reactModal) {
   docBody.appendChild(reactModal);
 }
 
-const getBrowser = () => {
-  const userAgent = navigator.userAgent.toLowerCase();
-
-  const result = {
-    text: null,
-    firefox: false,
-    msie: false,
-    edge: false,
-    chrome: false,
-    safari: false,
-  };
-
-  if (userAgent.indexOf('firefox') > -1) {
-    result.firefox = true;
-    result.text = 'firefox';
-  } else if (userAgent.indexOf('msie') > -1) {
-    result.msie = true;
-    result.text = 'msie';
-  } else if (userAgent.indexOf('ie') > -1) {
-    result.msie = true;
-    result.text = 'msie';
-  } else if (userAgent.indexOf('edge') > -1) {
-    result.edge = true;
-    result.text = 'edge';
-  } else if (userAgent.indexOf('trident') > -1) {
-    result.msie = true;
-    result.text = 'msie';
-  } else if (userAgent.indexOf('chrome') > -1) {
-    result.chrome = true;
-    result.text = 'chrome';
-  } else if (userAgent.indexOf('safari') > -1) {
-    result.safari = true;
-    result.text = 'safari';
-  }
-  return result;
-};
-
-const thisBrowser = getBrowser();
-
-// 스크롤바 활성화 여부 판단
-const isScrollBarDisable = () => doc.body.clientHeight < window.innerHeight;
-
-// 윈도우 스크롤바의 넓이를 계산한다. 크로스 브라우저를 지원한다.
-const getScrollBarWidth = () => {
-  const inner = doc.createElement('p');
-  inner.style.width = '100%';
-  inner.style.height = '100%';
-
-  const outer = doc.createElement('div');
-  outer.style.position = 'absolute';
-  outer.style.top = '0px';
-  outer.style.left = '0px';
-  outer.style.visibility = 'hidden';
-  outer.style.width = '100px';
-  outer.style.height = '100px';
-  outer.style.overflow = 'hidden';
-  outer.appendChild(inner);
-
-  docBody.appendChild(outer);
-
-  const w1 = inner.offsetWidth;
-  const h1 = inner.offsetHeight;
-  outer.style.overflow = 'scroll';
-  let w2 = inner.offsetWidth;
-  let h2 = inner.offsetHeight;
-  if (w1 === w2 && outer.clientWidth) {
-    w2 = outer.clientWidth;
-  }
-  if (h1 === h2 && outer.clientHeight) {
-    h2 = outer.clientHeight;
-  }
-
-  docBody.removeChild(outer);
-
-  // return [(w1 - w2), (h1 - h2)];
-  return w1 - w2;
-
-  // const scrollDiv = doc.createElement('div');
-  // scrollDiv.style.visibility = 'hidden';
-  // scrollDiv.style.width = '100px';
-  // scrollDiv.style.msOverflowStyle = 'scrollbar';
-  // doc.body.appendChild(scrollDiv);
-
-  // const widthNoScroll = scrollDiv.offsetWidth;
-  // scrollDiv.style.overflow = 'scroll';
-
-  // const scrollDivInner = doc.createElement('div');
-  // scrollDivInner.style.width = '100%';
-  // scrollDiv.appendChild(scrollDivInner);
-
-  // const widthWithScroll = scrollDivInner.offsetWidth;
-
-  // scrollDiv.parentNode.removeChild(scrollDiv);
-
-  // return widthNoScroll - widthWithScroll;
-};
-
-const scrollbarWidth = getScrollBarWidth();
-
-const scrollbarHidden = () => {
-  const { body } = doc;
-
-  if (syncModal.modal.length > 0) {
-    body.style.overflow = 'hidden';
-    if (!thisBrowser.msie) body.style.paddingRight = `${scrollbarWidth}px`;
-  } else {
-    body.style.overflow = '';
-    if (!thisBrowser.msie) body.style.paddingRight = '';
-  }
-};
-
-
 const propTypes = {
-  children: PropTypes.node.isRequired,
-  id: PropTypes.string,
+  children: defaultPropTypes.children.isRequired,
+  id: defaultPropTypes.id,
 
-  isCenter: PropTypes.bool,
-  left: PropTypes.number,
-  top: PropTypes.number,
-  right: PropTypes.number,
-  bottom: PropTypes.number,
+  isCenter: defaultPropTypes.isCenter,
+  left: defaultPropTypes.left,
+  top: defaultPropTypes.top,
+  right: defaultPropTypes.right,
+  bottom: defaultPropTypes.bottom,
 
-  beforeOpen: PropTypes.func,
-  afterOpen: PropTypes.func,
-  doneClose: PropTypes.func,
+  beforeOpen: defaultPropTypes.beforeOpen,
+  afterOpen: defaultPropTypes.afterOpen,
+  doneClose: defaultPropTypes.doneClose,
 
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
+  isOpen: defaultPropTypes.isOpen,
+  onClose: defaultPropTypes.onClose,
 
-  zIndex: PropTypes.number,
+  zIndex: defaultPropTypes.zIndex,
 
-  overlayClassName: PropTypes.string,
-  overlayStyle: PropTypes.shape({}),
+  overlayClassName: defaultPropTypes.overlayClassName,
+  overlayStyle: defaultPropTypes.overlayStyle,
+  isOverlayClose: defaultPropTypes.isOverlayClose,
 
-  isCloseButton: PropTypes.bool,
-  isEscClose: PropTypes.bool,
-};
-
-const defaultProps = {
-  id: null,
-
-  isCenter: true,
-  left: null,
-  top: null,
-  right: null,
-  bottom: null,
-
-  beforeOpen: null,
-  afterOpen: null,
-  doneClose: null,
-
-  isOpen: false,
-  onClose: null,
-
-  zIndex: 3000,
-
-  overlayClassName: null,
-  overlayStyle: null,
-
-  isEscClose: true,
-  isCloseButton: true,
-
+  isCloseButton: defaultPropTypes.isCloseButton,
+  isEscClose: defaultPropTypes.isEscClose,
 };
 
 // 데이터 처리는 will 에서 처리된 데이터를 활용하여 판단하는 건 did 에서 이루어 져야한다.
 const withModal = (Component) => {
   const Modal = observer(class Modal extends React.Component {
     static get defaultProps() {
-      return defaultProps;
+      const defaultProps = getDefaultProps();
+      return {
+        id: defaultProps.id,
+        isCenter: defaultProps.isCenter,
+        left: defaultProps.left,
+        top: defaultProps.top,
+        right: defaultProps.right,
+        bottom: defaultProps.bottom,
+        beforeOpen: defaultProps.beforeOpen,
+        afterOpen: defaultProps.afterOpen,
+        doneClose: defaultProps.doneClose,
+        isOpen: defaultProps.isOpen,
+        onClose: defaultProps.onClose,
+        zIndex: defaultProps.zIndex,
+        overlayClassName: defaultProps.overlayClassName,
+        overlayStyle: defaultProps.overlayStyle,
+        isOverlayClose: defaultProps.isOverlayClose,
+        isEscClose: defaultProps.isEscClose,
+        isCloseButton: defaultProps.isCloseButton,
+      };
     }
 
     static get propTypes() {
@@ -246,7 +128,7 @@ const withModal = (Component) => {
       this.onEventAfterOpen();
 
       this.isScrollBarDisable = isScrollBarDisable();
-      if (!this.isScrollBarDisable) scrollbarHidden();
+      if (!this.isScrollBarDisable) scrollbarHidden(syncModal);
 
       if (this.props.isEscClose &&
           this.isOpen && !this.isKeydownEventListener && syncModal.current === this.id) {
@@ -294,7 +176,7 @@ const withModal = (Component) => {
         this.isResizeEventListener = true;
       }
 
-      if (!this.isScrollBarDisable) scrollbarHidden();
+      if (!this.isScrollBarDisable) scrollbarHidden(syncModal);
 
       if (!this.isOpen) {
         this.beforeOpenOnce = false;
@@ -379,6 +261,7 @@ const withModal = (Component) => {
           isCenter={this.isCenter}
           overlayClassName={overlayClassName}
           overlayStyle={overlayStyle}
+          onRequestClose={this.props.isOverlayClose ? this.onRequestClose : null}
         >
           <Component
             {...props}

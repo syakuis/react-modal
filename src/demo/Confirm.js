@@ -7,34 +7,54 @@
 import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
-import { Modal, open, close, createId } from './Modal';
+// import { Modal, open, close, createId } from 'react-modal-syaku';
+import { Modal, createId, open, close } from './Modal';
+
+// confirm 한번에 활성화하는 갯수 제한.
+const confirmLimit = 10;
 
 const syncConfirm = observable({
   confirm: [],
   active: action((id, message, apply, cancel, alert = false) => {
-    syncConfirm.confirm = [
-      ...syncConfirm.confirm, {
-        id, message, apply, cancel, alert,
-      },
-    ];
+    let confirm = syncConfirm.confirm.slice();
+
+    confirm.push({
+      id, message, apply, cancel, alert,
+    });
+
+    if (confirm.length > confirmLimit) {
+      confirm = confirm.slice(0, confirmLimit);
+    }
+
+    syncConfirm.confirm.replace(confirm);
+  }),
+  destroy: action((id) => {
+    syncConfirm.confirm = syncConfirm.confirm.filter(item => item.id !== id);
   }),
 });
 
-const onCancel = (id, cancel) => {
+const reset = (id) => {
+  syncConfirm.destroy(id);
   close(id);
+};
+
+const onCancel = (id, cancel) => {
+  reset(id);
   if (typeof cancel === 'function') cancel(id);
 };
 
 const onApply = (id, apply) => {
-  close(id);
+  reset(id);
   if (typeof apply === 'function') apply(id);
 };
 
 const ConfirmBox = observer(() => (
   syncConfirm.confirm.map(item => (
     <Modal
+      key={item.id}
       id={item.id}
       isCloseButton={false}
+      height={0}
     >
       {
         <div className="message-body">

@@ -6,14 +6,18 @@ if (process.env.SOURCE_TARGET === 'node') {
 }
 
 const {
-  createId, open, close,
+  createId, open, close, setDefaultProps, getDefaultProps,
 } = ModalFactory;
 
 const Modal = (process.env.SOURCE_TARGET === 'node') ? ModalFactory.Modal : ModalFactory.default;
+
+setDefaultProps({ height: 300 });
 
 module.exports = {
   Modal,
   createId,
   open,
   close,
+  setDefaultProps,
+  getDefaultProps,
 };

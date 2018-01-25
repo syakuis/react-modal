@@ -2,6 +2,7 @@
 
 > React 16 이상 버전만 지원합니다.  IE 11 이상만 지원합니다. 크롬, 사파리, 파이어폭스, IE 11 에서 테스트하였습니다.
 
+- 1.3.9 : 모달을 한번에 열 수 있는 갯수는 20개로 제한합니다. 옵션 설정을 통해 변경할 수 있습니다.
 - 1.3.7 : React state 사용하지 않고 mobx state 를 사용합니다.
 - 여러 개의 모달을 순차적으로 제어할 수 있습니다.
 - 모달 코드 순서와 상관없이 마지막에 활성화된 모달이 최상위에 노출됩니다.
@@ -45,8 +46,14 @@ $ yarn build:prod
 [![Edit react modal demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/l943kvr237)
 
 ```
-import { Modal, createId, open, close } from 'react-modal-syaku';
+import { Modal, createId, open, close, setDefaultProps, getDefaultProps } from 'react-modal-syaku';
 import 'react-modal-syaku/dist/react-modal.css';
+
+// Global defaults setter
+setDefaultProps(props);
+
+// Global defaults getter
+getDefaultProps();
 
 this.id = createId(); // random id
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, createId, open, close } from '../Modal';
+import { Modal, createId, open, close, getDefaultProps } from '../Modal';
 
 class Basic extends React.Component {
   constructor(props) {
@@ -19,6 +19,21 @@ class Basic extends React.Component {
   render() {
     return (
       <div>
+        <h3># global options setting</h3>
+        <pre>
+          {`
+            아래 설정은 최상위 시작점에 호출되어야 한다.
+            setDefaultProps({ height: 300 }); // setDefaultProps({ ...props });
+
+            설정정보 조회
+            getDefaultProps();
+          `}
+        </pre>
+        <pre>
+          {
+            JSON.stringify(getDefaultProps(), null, ' ')
+          }
+        </pre>
         <h3># basic</h3>
         <button type="button" className="btn btn-default" onClick={() => { open(this.id); }}>Open</button>
         <p />
@@ -134,7 +149,7 @@ class Basic extends React.Component {
           containerStyle={{ padding: 0 }}
           width={500}
         >
-          <div className="panel panel-default" style={{ marginBottom: 0 }}>
+          <div className="panel panel-default" style={{ marginBottom: 0, height: '100%' }}>
             <div className="panel-heading">Panel heading without title</div>
             <div className="panel-body">
               Panel content<br />
@@ -169,6 +184,25 @@ class Basic extends React.Component {
           <div>
             기본적으로 `margin: 0` 이다. 원한다면 직접 `style` 에 `margin` 설정해야 한다.<br />
             esc 키로 닫을 수 있다.
+          </div>
+        </Modal>
+        <hr />
+        <h3># overlay click not close</h3>
+        <button type="button" className="btn btn-default" onClick={() => open('isOpen4')}>Open</button>
+        <p />
+        <pre>
+          {`
+          id="isOpen4"
+          isOverlayClose={false}
+          `}
+        </pre>
+
+        <Modal
+          id="isOpen4"
+          isOverlayClose={false}
+        >
+          <div>
+            배경을 클릭하면 모달이 닫히지 않는 다.
           </div>
         </Modal>
         <hr />
