@@ -7,7 +7,7 @@ const syncModal = observable({
   modal: [],
   current: computed(() => {
     const firstIndex = 0;
-    if (syncModal.modal.lenght === firstIndex) return null;
+    if (syncModal.modal.length === firstIndex) return null;
     return syncModal.modal[firstIndex];
   }),
   isOpen: id => syncModal.modal.indexOf(id) > -1,
