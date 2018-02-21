@@ -1,4 +1,4 @@
-import Modal, { createId, open, close, setDefaultProps, getDefaultProps } from '../Modal';
+import Modal, { createId, open, close, setDefaultProps, getDefaultProps } from '_src/Modal';
 
 setDefaultProps({ height: 300 });
 

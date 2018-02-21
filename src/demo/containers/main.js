@@ -4,6 +4,7 @@ import DevTools from 'mobx-react-devtools';
 import Basic from './basic';
 import Multiple from './multiple';
 import Trigger from './trigger';
+import Options from './options';
 import ConfirmExample from './confirm';
 
 class Main extends React.Component {
@@ -34,6 +35,9 @@ class Main extends React.Component {
                 <Link to="/trigger" replace>Trigger event</Link>
               </li>
               <li role="presentation">
+                <Link to="/options" replace>Options</Link>
+              </li>
+              <li role="presentation">
                 <Link to="/confirm" replace>Confirm</Link>
               </li>
             </ul>
@@ -42,6 +46,7 @@ class Main extends React.Component {
             <Route exact path="/" component={Basic} />
             <Route path="/multiple" component={Multiple} />
             <Route path="/trigger" component={Trigger} />
+            <Route path="/options" component={Options} />
             <Route path="/confirm" component={ConfirmExample} />
           </div>
         </div>

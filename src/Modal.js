@@ -11,7 +11,6 @@ import { defaultPropTypes, setDefaultProps, getDefaultProps } from './properties
 
 const propTypes = {
   children: defaultPropTypes.children.isRequired,
-  id: defaultPropTypes.id.isRequired,
   zIndex: defaultPropTypes.zIndex,
 
   onRequestClose: defaultPropTypes.onRequestClose.isRequired,
@@ -56,6 +55,10 @@ class Modal extends Component {
   constructor(props) {
     super(props);
 
+    this.modal = undefined;
+
+    this.onFocus = this.onFocus.bind(this);
+
     let style = Object.assign({}, props.style);
     if (props.width && (props.width > 0 || props.width !== '')) {
       style = { ...style, width: props.width };
@@ -84,10 +87,18 @@ class Modal extends Component {
     ) : null;
   }
 
+  onFocus() {
+    if (this.modal) this.modal.focus();
+  }
+
+  getDOMRootNode() {
+    return this.modal;
+  }
+
   render() {
     return (
       <div
-        id={this.props.id}
+        ref={(node) => { this.modal = node; }}
         className={`modal-wrapper${this.props.className ? ` ${this.props.className}` : ''}`}
         style={this.style}
         role="button"

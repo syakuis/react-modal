@@ -99,6 +99,7 @@ const base = (args) => {
 
     resolve: {
       alias: {
+        _src: path.resolve(__dirname, `${src}`),
         _resources: path.resolve(__dirname, `${src}/resources`),
         _commons: path.resolve(__dirname, `${src}/commons`),
         _contatiners: path.resolve(__dirname, `${src}/contatiners`),

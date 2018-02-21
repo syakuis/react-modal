@@ -3,7 +3,6 @@ import { defaultPropTypes, getDefaultProps } from './properties';
 
 const propTypes = {
   children: defaultPropTypes.children.isRequired,
-  id: defaultPropTypes.id.isRequired,
   isCenter: defaultPropTypes.isCenter.isRequired,
   overlayClassName: defaultPropTypes.overlayClassName,
   overlayStyle: defaultPropTypes.overlayStyle,
@@ -24,6 +23,8 @@ class Overlay extends React.Component {
   constructor(props) {
     super(props);
 
+    this.overlay = undefined;
+
     this.className = props.isCenter ?
       'modal-overlay modal-overlay-center modal-overlay-alignCenter' :
       'modal-overlay';
@@ -41,10 +42,14 @@ class Overlay extends React.Component {
     }
   }
 
+  getDOMRootNode() {
+    return this.overlay;
+  }
+
   render() {
     return (
       <div
-        id={this.props.id}
+        ref={(node) => { this.overlay = node; }}
         className={this.className}
         style={this.style}
         role="button"

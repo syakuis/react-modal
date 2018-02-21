@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, createId, open, close, getDefaultProps } from '../Modal';
+import Options from './options';
 
 class Basic extends React.Component {
   constructor(props) {
@@ -19,21 +20,6 @@ class Basic extends React.Component {
   render() {
     return (
       <div>
-        <h3># global options setting</h3>
-        <pre>
-          {`
-            아래 설정은 최상위 시작점에 호출되어야 한다.
-            setDefaultProps({ height: 300 }); // setDefaultProps({ ...props });
-
-            설정정보 조회
-            getDefaultProps();
-          `}
-        </pre>
-        <pre>
-          {
-            JSON.stringify(getDefaultProps(), null, ' ')
-          }
-        </pre>
         <h3># basic</h3>
         <button type="button" className="btn btn-default" onClick={() => { open(this.id); }}>Open</button>
         <p />

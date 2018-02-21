@@ -1,3 +1,10 @@
+/**
+ * 현재 modalId 는 componentDid 상태에서만 확인할 수 있다.
+ * @author: Seok Kyun. Choi. 최석균 (Syaku)
+ * @site: http://syaku.tistory.com
+ * @since: 2017. 9. 16.
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
@@ -50,6 +57,7 @@ const propTypes = {
 
   isCloseButton: defaultPropTypes.isCloseButton,
   isEscClose: defaultPropTypes.isEscClose,
+  isAutoFocus: defaultPropTypes.isAutoFocus,
 };
 
 // 데이터 처리는 will 에서 처리된 데이터를 활용하여 판단하는 건 did 에서 이루어 져야한다.
@@ -75,6 +83,7 @@ const withModal = (Component) => {
         isOverlayClose: defaultProps.isOverlayClose,
         isEscClose: defaultProps.isEscClose,
         isCloseButton: defaultProps.isCloseButton,
+        isAutoFocus: defaultProps.isAutoFocus,
       };
     }
 
@@ -89,9 +98,6 @@ const withModal = (Component) => {
 
       this.ele = doc.createElement('div');
       this.ele.setAttribute('id', this.id);
-
-      this.modalId = `${this.id}_modal`;
-      this.overlayId = `${this.id}_overlay`;
 
       this.isCenter = props.isCenter;
       if (props.left !== null || props.top !== null
@@ -141,6 +147,8 @@ const withModal = (Component) => {
         window.addEventListener('resize', this.onResizeEventListener);
         this.isResizeEventListener = true;
       }
+
+      if (this.id === syncModal.current && this.props.isAutoFocus) this.modal.onFocus();
     }
 
     componentWillUpdate() {
@@ -184,6 +192,8 @@ const withModal = (Component) => {
       } else {
         this.doneCloseOnce = false;
       }
+
+      if (this.id === syncModal.current && this.props.isAutoFocus) this.modal.onFocus();
     }
 
     componentWillUnmount() {
@@ -232,9 +242,9 @@ const withModal = (Component) => {
     onResizeEventListener() {
       // resize 이벤트를 통해 모달의 세로 정렬을 조작한다.
       // 모달 높이가 브라우저보다 클 경우 중앙 정렬을 하지 않는 다.
-      if (!this.isCenter) return;
-      const modal = doc.getElementById(this.modalId);
-      const overlay = doc.getElementById(this.overlayId);
+      if (!this.isCenter || !this.modal || !this.overlay) return;
+      const modal = this.modal.getDOMRootNode();
+      const overlay = this.overlay.getDOMRootNode();
       if (modal) {
         const windowHeight = window.innerHeight;
         if (windowHeight < modal.offsetHeight) {
@@ -256,7 +266,7 @@ const withModal = (Component) => {
       } = this.props;
       return ReactDOM.createPortal(
         <Overlay
-          id={this.overlayId}
+          ref={(node) => { this.overlay = node; }}
           zIndex={this.props.zIndex}
           isCenter={this.isCenter}
           overlayClassName={overlayClassName}
@@ -265,7 +275,7 @@ const withModal = (Component) => {
         >
           <Component
             {...props}
-            id={this.modalId}
+            ref={(node) => { this.modal = node; }}
             onRequestClose={this.onRequestClose}
           />
         </Overlay>,

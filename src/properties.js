@@ -20,6 +20,7 @@ const defaultPropTypes = {
   onRequestClose: PropTypes.func,
   isCloseButton: PropTypes.bool,
   isEscClose: PropTypes.bool,
+  isAutoFocus: PropTypes.bool,
 
   className: PropTypes.string,
   style: PropTypes.shape(),
@@ -55,6 +56,7 @@ const defaultProperties = {
   onRequestClose: null,
   isCloseButton: true,
   isEscClose: true,
+  isAutoFocus: true,
 
   className: null,
   style: {},
