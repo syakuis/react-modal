@@ -6,13 +6,10 @@
  */
 import 'core-js/fn/array/from';
 import 'core-js/fn/array/for-each';
+import Modal, { createId, open, close, setDefaultProps, getDefaultProps } from './Modal';
 
-const {
-  default: Modal, createId, open, close, setDefaultProps, getDefaultProps,
-} = require('./Modal');
-
-module.exports = {
-  Modal,
+export default Modal;
+export {
   createId,
   open,
   close,
