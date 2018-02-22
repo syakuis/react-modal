@@ -10,6 +10,7 @@ import Modal, { createId, open, close, setDefaultProps, getDefaultProps } from '
 
 export default Modal;
 export {
+  Modal,
   createId,
   open,
   close,

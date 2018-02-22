@@ -1188,7 +1188,7 @@ module.exports = warning;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getDefaultProps = exports.setDefaultProps = exports.close = exports.open = exports.createId = undefined;
+exports.getDefaultProps = exports.setDefaultProps = exports.close = exports.open = exports.createId = exports.Modal = undefined;
 
 __webpack_require__(40);
 
@@ -1207,6 +1207,7 @@ exports.default = _Modal2.default; /**
                                     * @since: 2017. 8. 31.
                                     */
 
+exports.Modal = _Modal2.default;
 exports.createId = _Modal.createId;
 exports.open = _Modal.open;
 exports.close = _Modal.close;
