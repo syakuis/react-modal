@@ -56,6 +56,7 @@ class Modal extends Component {
     super(props);
 
     this.modal = undefined;
+    this.focus = false;
 
     this.onFocus = this.onFocus.bind(this);
 
@@ -88,7 +89,10 @@ class Modal extends Component {
   }
 
   onFocus() {
-    if (this.modal) this.modal.focus();
+    if (this.modal && !this.focus) {
+      this.focus = true;
+      this.modal.focus();
+    }
   }
 
   getDOMRootNode() {

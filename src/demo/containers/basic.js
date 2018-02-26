@@ -1,12 +1,17 @@
 import React from 'react';
-import { Modal, createId, open, close, getDefaultProps } from '../Modal';
-import Options from './options';
+import { Modal, createId, open, close } from '../Modal';
 
 class Basic extends React.Component {
   constructor(props) {
     super(props);
 
     this.id = createId();
+
+    this.onChangeTest = this.onChangeTest.bind(this);
+
+    this.state = {
+      text: '',
+    };
   }
 
   onOpen(name) {
@@ -15,6 +20,10 @@ class Basic extends React.Component {
 
   onClose(name) {
     this.setState({ [name]: false });
+  }
+
+  onChangeTest(e) {
+    this.setState({ text: e.target.value });
   }
 
   render() {
@@ -39,6 +48,7 @@ class Basic extends React.Component {
         >
           <div>
             esc 키로 닫을 수 있다.
+            <input type="text" value={this.state.text} onChange={this.onChangeTest} />
           </div>
         </Modal>
         <hr />

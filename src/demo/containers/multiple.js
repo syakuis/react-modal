@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Modal, open } from '../Modal';
 
@@ -6,8 +5,15 @@ class Multiple extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onChangeTest = this.onChangeTest.bind(this);
+
     this.state = {
+      text: '',
     };
+  }
+
+  onChangeTest(e) {
+    this.setState({ text: e.target.value });
   }
 
   render() {
@@ -62,6 +68,7 @@ class Multiple extends React.Component {
           isCenter={false}
         >
           Child 활성화
+          <input type="text" value={this.state.text} onChange={this.onChangeTest} />
         </Modal>
 
         <Modal

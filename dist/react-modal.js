@@ -1979,6 +1979,7 @@ var Modal = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
 
     _this.modal = undefined;
+    _this.focus = false;
 
     _this.onFocus = _this.onFocus.bind(_this);
 
@@ -2014,7 +2015,10 @@ var Modal = function (_Component) {
   _createClass(Modal, [{
     key: 'onFocus',
     value: function onFocus() {
-      if (this.modal) this.modal.focus();
+      if (this.modal && !this.focus) {
+        this.focus = true;
+        this.modal.focus();
+      }
     }
   }, {
     key: 'getDOMRootNode',
