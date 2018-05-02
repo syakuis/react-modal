@@ -1,8 +1,5 @@
 import React from 'react';
-import shortid from 'shortid';
-import { Modal, open, close } from '../Modal';
-
-const createId = () => shortid.generate();
+import { Modal, open, close, createId } from '../Modal';
 
 class Basic extends React.Component {
   constructor(props) {

@@ -15,9 +15,11 @@ DEMO : http://syakuis.github.io/demo/react-modal
 
 ## Install
 
-`react, react-dom, mobx, mobx-react` 패키지가 필요합니다.
+`react, mobx` 패키지가 필요합니다.
 
 ```
+$ npm install react mobx
+
 $ npm install react-modal-syaku
 
 or
@@ -29,15 +31,13 @@ $ yarn add react-modal-syaku
 
 ```
 // dev
-$ yarn serv:dev
+$ yarn dev
 ```
-
-http://localhost:8089
 
 ## build
 
 ```
-$ yarn build:prod
+$ yarn build
 ```
 
 

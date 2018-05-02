@@ -6,9 +6,11 @@
  */
 import 'core-js/fn/array/from';
 import 'core-js/fn/array/for-each';
+import shortid from 'shortid';
 import Modal, { open, close, setDefaultProps, getDefaultProps } from './Modal';
 
 export default Modal;
+export const createId = () => shortid.generate();
 export {
   Modal,
   open,

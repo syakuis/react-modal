@@ -1,4 +1,4 @@
-## 2.0.0
+## 2.0.1
 
 - mobx `^4.2.0` is supported.
 - react `^16.3.2` is supported.
