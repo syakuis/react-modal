@@ -5,8 +5,7 @@
  * @since: 2017. 8. 31.
  */
 import React, { Component } from 'react';
-import withModal from './withModal';
-import { syncModal, createId } from './syncModal';
+import withModal, { open, close } from './withModal';
 import { defaultPropTypes, setDefaultProps, getDefaultProps } from './properties';
 
 const propTypes = {
@@ -125,7 +124,5 @@ class Modal extends Component {
 
 Modal.propTypes = propTypes;
 
-const { open, close } = syncModal;
-
 export default withModal(Modal);
-export { createId, open, close, setDefaultProps, getDefaultProps };
+export { open, close, setDefaultProps, getDefaultProps };

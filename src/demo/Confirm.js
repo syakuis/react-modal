@@ -7,8 +7,8 @@
 import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
-// import { Modal, open, close, createId } from 'react-modal-syaku';
-import { Modal, createId, open, close } from './Modal';
+import shortid from 'shortid';
+import { Modal, open, close } from './Modal';
 
 // confirm 한번에 활성화하는 갯수 제한.
 const confirmLimit = 10;
@@ -81,7 +81,7 @@ const ConfirmBox = observer(() => (
 ));
 
 const Confirm = (message, apply, cancel) => {
-  const id = createId();
+  const id = shortid.generate();
   syncConfirm.active(id, message, apply, cancel);
   open(id);
 };

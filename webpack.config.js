@@ -3,6 +3,7 @@
  * @author Seok Kyun. Choi. 최석균 (Syaku)
  * @site http://syaku.tistory.com
  */
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const merge = require('webpack-merge');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -25,6 +26,9 @@ module.exports = merge(base(), {
     library,
   },
   plugins: [
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new UglifyJsPlugin({
       include: /\.min\.js$/,
       sourceMap: true,

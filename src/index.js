@@ -6,12 +6,11 @@
  */
 import 'core-js/fn/array/from';
 import 'core-js/fn/array/for-each';
-import Modal, { createId, open, close, setDefaultProps, getDefaultProps } from './Modal';
+import Modal, { open, close, setDefaultProps, getDefaultProps } from './Modal';
 
 export default Modal;
 export {
   Modal,
-  createId,
   open,
   close,
   setDefaultProps,

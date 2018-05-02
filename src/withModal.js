@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
 import shortid from 'shortid';
 import '_resources/modal.css';
-import { syncModal } from './syncModal';
+import ModalStore from './ModalStore';
 import { defaultPropTypes, getDefaultProps } from './properties';
 import { isScrollBarDisable, scrollbarHidden } from './utils';
 import Overlay from './Overlay';
@@ -60,7 +60,8 @@ const propTypes = {
   isAutoFocus: defaultPropTypes.isAutoFocus,
 };
 
-// 데이터 처리는 will 에서 처리된 데이터를 활용하여 판단하는 건 did 에서 이루어 져야한다.
+const modalStore = new ModalStore();
+
 const withModal = (Component) => {
   const Modal = observer(class Modal extends React.Component {
     static get defaultProps() {
@@ -117,13 +118,13 @@ const withModal = (Component) => {
       this.onEscClose = this.onEscClose.bind(this);
       this.onResizeEventListener = this.onResizeEventListener.bind(this);
 
-      this.isOpen = syncModal.isOpen(this.id);
+      this.isOpen = modalStore.isOpen(this.id);
     }
 
     componentWillMount() {
       if (this.props.isOpen) {
         this.onOpen();
-        this.isOpen = syncModal.isOpen(this.id);
+        this.isOpen = modalStore.isOpen(this.id);
       }
       this.onEventBeforeOpen();
     }
@@ -134,25 +135,25 @@ const withModal = (Component) => {
       this.onEventAfterOpen();
 
       this.isScrollBarDisable = isScrollBarDisable();
-      if (!this.isScrollBarDisable) scrollbarHidden(syncModal);
+      if (!this.isScrollBarDisable) scrollbarHidden(modalStore);
 
       if (this.props.isEscClose &&
-          this.isOpen && !this.isKeydownEventListener && syncModal.current === this.id) {
+          this.isOpen && !this.isKeydownEventListener && modalStore.current === this.id) {
         window.addEventListener('keydown', this.onEscClose);
         this.isKeydownEventListener = true;
       }
 
-      if (!this.isResizeEventListener && syncModal.current === this.id) {
+      if (!this.isResizeEventListener && modalStore.current === this.id) {
         this.onResizeEventListener();
         window.addEventListener('resize', this.onResizeEventListener);
         this.isResizeEventListener = true;
       }
 
-      if (this.id === syncModal.current && this.props.isAutoFocus) this.modal.onFocus();
+      if (this.id === modalStore.current && this.props.isAutoFocus) this.modal.onFocus();
     }
 
     componentWillUpdate() {
-      this.isOpen = syncModal.isOpen(this.id);
+      this.isOpen = modalStore.isOpen(this.id);
 
       this.onEventBeforeOpen();
       if (!this.isOpen) this.onEventDoneClose();
@@ -169,7 +170,7 @@ const withModal = (Component) => {
         window.removeEventListener('keydown', this.onEscClose);
         this.isKeydownEventListener = false;
 
-        if (this.isOpen && syncModal.current === this.id) {
+        if (this.isOpen && modalStore.current === this.id) {
           window.addEventListener('keydown', this.onEscClose);
           this.isKeydownEventListener = true;
         }
@@ -179,12 +180,12 @@ const withModal = (Component) => {
       window.removeEventListener('resize', this.onResizeEventListener);
       this.isResizeEventListener = false;
 
-      if (syncModal.current === this.id) {
+      if (modalStore.current === this.id) {
         window.addEventListener('resize', this.onResizeEventListener);
         this.isResizeEventListener = true;
       }
 
-      if (!this.isScrollBarDisable) scrollbarHidden(syncModal);
+      if (!this.isScrollBarDisable) scrollbarHidden(modalStore);
 
       if (!this.isOpen) {
         this.beforeOpenOnce = false;
@@ -193,7 +194,7 @@ const withModal = (Component) => {
         this.doneCloseOnce = false;
       }
 
-      if (this.id === syncModal.current && this.props.isAutoFocus) this.modal.onFocus();
+      if (this.id === modalStore.current && this.props.isAutoFocus) this.modal.onFocus();
     }
 
     componentWillUnmount() {
@@ -207,7 +208,7 @@ const withModal = (Component) => {
       if (typeof this.props.onClose === 'function') {
         this.props.onClose(this.id);
       } else {
-        syncModal.close(this.id);
+        modalStore.close(this.id);
       }
       this.isOpen = false;
     }
@@ -256,11 +257,11 @@ const withModal = (Component) => {
     }
 
     onOpen() {
-      syncModal.open(this.id);
+      modalStore.open(this.id);
     }
 
     render() {
-      if (!syncModal.isOpen(this.id)) return null;
+      if (!modalStore.isOpen(this.id)) return null;
       const {
         isCenter, overlayClassName, overlayStyle, ...props
       } = this.props;
@@ -287,4 +288,6 @@ const withModal = (Component) => {
   return Modal;
 };
 
+export const open = (id) => { modalStore.open(id); };
+export const close = (id) => { modalStore.close(id); };
 export default withModal;

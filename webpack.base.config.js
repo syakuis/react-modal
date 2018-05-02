@@ -4,6 +4,7 @@
  * @site http://syaku.tistory.com
  */
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pkg = require('./package.json');
 
@@ -22,6 +23,7 @@ const base = (args) => {
     },
 
     plugins: [
+      new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),
       new ExtractTextPlugin({
         filename: `${filename}.css`,
       }),
@@ -85,14 +87,8 @@ const base = (args) => {
         },
         {
           test: /\.js$/,
-          include: path.resolve(__dirname, src),
-          use: {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true,
-              babelrc: true,
-            },
-          },
+          include: path.join(__dirname, 'src'),
+          use: ['babel-loader'],
         },
       ],
     },
